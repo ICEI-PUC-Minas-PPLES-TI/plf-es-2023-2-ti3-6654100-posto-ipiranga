@@ -1,18 +1,21 @@
-# [Nome do projeto]
+# Posto Ipiranga
 
-[Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
-testando
+Descrição:
+O Sistema de Gerenciamento de Posto de Combustível é uma solução abrangente projetada para otimizar e automatizar o processo de gerenciamento de um posto de combustível. Esse software oferece funcionalidades avançadas para controle de estoque de combustíveis, vendas, fluxo de caixa e gestão de clientes. Ele proporciona uma experiência intuitiva para os funcionários do posto e agiliza as operações diárias.
 ## Alunos integrantes da equipe
 
-* [Nome completo do aluno 1]
-* [Nome completo do aluno 2]
-* [Nome completo do aluno 3]
-* [Nome completo do aluno 4]
+* Guilherme Augustto Costa Barros
+* Lucas Perlatto Lotti Garcia
+* Marcus Viniccius Souza de Freitas
+* Pablo Guilherme Amancio Pereira Magela Benevenuto
+* Raquel Inez de Almeida Calazans
+* Tiago Vitor Pereira Saraiva
 
 ## Professores responsáveis
 
-* [Nome completo do professor 1]
-* [Nome completo do professor 2]
+* Eveline Alonso Veloso
+* Juliana Amaral Baroni de Carvalho
+* Luiz Henrique da Costa Silva
 
 ## Instruções de utilização
 
