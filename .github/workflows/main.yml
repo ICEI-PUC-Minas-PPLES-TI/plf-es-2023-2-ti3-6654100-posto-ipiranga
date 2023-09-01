@@ -36,6 +36,6 @@ jobs:
 
       - name: push
         run: |
-          docker push  ${{ env.REGISTRY }}/plf-es-2023-2-ti3-6654100-posto-ipiranga/posto-ipiranga:v1.0.0
+          docker push  ${{ env.REGISTRY }}/plf-es-2023-2-ti3-6654100-posto-ipiranga/posto-ipiranga/posto-ipiranga:v1.0.0
 
-          docker push  ${{ env.REGISTRY }}/plf-es-2023-2-ti3-6654100-posto-ipiranga/postoapp:v1.0.0
+          docker push  ${{ env.REGISTRY }}/plf-es-2023-2-ti3-6654100-posto-ipiranga/postoapp/front:v1.0.0
