@@ -1,7 +1,7 @@
 name: Github CI
 on:
-  pull_request:
-    branches: [ "arquitetura" ]
+  push:
+    tags: [ 'v*.*.*' ]
 env:
   REGISTRY: lucaslotti
 jobs:
