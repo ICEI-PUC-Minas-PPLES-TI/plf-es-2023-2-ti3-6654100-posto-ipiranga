@@ -1,9 +1,7 @@
 name: Github CI
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "arquitetura" ]
 
 jobs:
   pipeline:
