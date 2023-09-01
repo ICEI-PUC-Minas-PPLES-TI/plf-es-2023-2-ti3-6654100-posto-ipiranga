@@ -21,14 +21,16 @@ COPY . .
 
 ENV DB_URL=jdbc:postgresql://localhost:5432/tis_prod
 
-RUN mvn clean package -Ddb-url=${DB_URL}
+ENV PORT=7000
+
+RUN mvn clean package -Ddb-url=${DB_URL} -Dport=${PORT}
 
 FROM openjdk:17.0.1-jdk-slim as deploy
 
 COPY --from=builder /app/target/*.jar /app.jar
 
 # Exponha a porta em que a aplicação vai rodar
-EXPOSE 8080
+EXPOSE $PORT
 
 # Comando para executar a aplicação quando o contêiner for iniciado
 CMD ["java", "-jar", "/app.jar"]

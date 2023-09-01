@@ -12,4 +12,4 @@ spring:
   database:
     driverClassName: org.postgresql.Driver
 server:
-  port: 8080
+  port: ${port}
