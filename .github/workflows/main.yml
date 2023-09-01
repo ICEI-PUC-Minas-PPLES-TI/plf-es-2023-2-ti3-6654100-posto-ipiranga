@@ -1,0 +1,37 @@
+name: Github CI
+on:
+  push:
+    tags: [ 'v*.*.*' ]
+env:
+  REGISTRY: lucaslotti
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest # Os comandos serão executados em um sistema operacional Linux
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v2 # Faz o checkout do código recebido
+
+      - name: Build
+        run: |
+          docker build Codigo/posto-ipiranga -t posto-ipiranga
+
+          docker build Codigo/postoapp -t postoapp
+
+      - name: tag
+        run: |
+          docker tag posto-ipiranga ${{ env.REGISTRY }}/posto-ipiranga:v1.0.0
+          
+          docker tag postoapp ${{ env.REGISTRY }}/postoapp:v1.0.0
+
+      - name: Log into registry ghcr.io
+        uses: docker/login-action@v2
+        with:
+          username: lucaslotti
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: push
+        run: |
+          docker push  ${{ env.REGISTRY }}/posto-ipiranga:v1.0.0
+
+          docker push  ${{ env.REGISTRY }}/postoapp:v1.0.0
