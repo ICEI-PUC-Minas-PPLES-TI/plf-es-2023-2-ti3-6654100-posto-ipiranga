@@ -19,7 +19,7 @@ WORKDIR app
 
 COPY . .
 
-ENV DB_URL=jdbc:postgresql://localhost:5432/tis_prod
+ENV DB_URL=jdbc:postgresql://168.75.104.24:5432/tis_prod
 
 ENV PORT=7000
 
