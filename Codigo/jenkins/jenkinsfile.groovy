@@ -108,7 +108,7 @@ pipeline {
                         def frontEndChoice = params['front-end']
                         def backEndChoice = params['back-end']
                         if (params.gerar_front) {
-                            sh("docker run --detach -p 3000:3000 --name postoapp --network=tis-3 lucaslotti/postoapp:${backEndChoice}")
+                            sh("docker run --detach -p 80:80 --name postoapp --network=tis-3 lucaslotti/postoapp:${backEndChoice}")
                         }
                         
                         if (params.gerar_back) {
