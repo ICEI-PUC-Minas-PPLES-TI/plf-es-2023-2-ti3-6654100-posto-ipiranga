@@ -1,0 +1,8 @@
+@import '../../index.scss';
+
+.cadastro {
+    @include flexCenter(column);
+
+    height: 100vh;
+    background-color: #ffd100;
+}
