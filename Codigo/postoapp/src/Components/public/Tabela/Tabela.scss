@@ -1,0 +1,28 @@
+    .table {
+
+        margin-top: 70px;
+        margin-left: 90px;
+        margin-right: 90px !important;
+        max-width: 80vw;
+        border:1px solid blue;    
+
+        .td {
+            max-width: 5px !important;
+        }
+        th {
+
+            color: #1879bf !important;
+        }
+
+        #formSelect {
+          
+            max-width: 200px; 
+            margin: 0 auto; 
+        }
+       
+        /*REMOVE LINHAS HORIZONTAIS DA TABELA: */
+         td, th {
+            border:none !important;
+          } 
+
+    }
