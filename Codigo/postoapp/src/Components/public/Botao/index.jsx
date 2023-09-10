@@ -1,9 +1,9 @@
 import './Botao.scss'
 
-const Botao = ({type, text}) => {
+const Botao = ({type, text, botaoSubmit, altura}) => {
     return(
         <>
-        <button className='botao' type={type}>{text}</button>
+        <button style={{height: altura}} onClick={botaoSubmit} className='botao' type={type}>{text}</button>
         </>
     )
 }

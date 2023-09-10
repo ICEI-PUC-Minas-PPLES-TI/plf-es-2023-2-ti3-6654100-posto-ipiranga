@@ -6,6 +6,7 @@
     padding-left: 0.5rem;
     margin-bottom: 1vh;
     color: white;
+    user-select: none;
 }
 
 .input-block{
@@ -18,9 +19,8 @@
     width: fill;
     height: 6vh;
     padding-inline-start: 0.5rem;
-
-}
-
+    gap: 1vw;
+    
 input{
     outline: none;
     color: white;
@@ -29,11 +29,14 @@ input{
     width: fill;
     height: 5vh;
 
+
     &::placeholder{
     color: white;
+    user-select: none;
     }
 }
 
+}
 .textfield{
     margin-block: 2vh;
 }
