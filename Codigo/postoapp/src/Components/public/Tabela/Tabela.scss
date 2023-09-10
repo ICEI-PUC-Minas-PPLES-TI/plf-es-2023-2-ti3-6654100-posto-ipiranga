@@ -1,26 +1,20 @@
     .table {
 
-        margin-top: 70px;
-        margin-left: 90px;
-        margin-right: 90px !important;
+        margin-top: 3em;
+        margin-left: 5em;
         max-width: 80vw;
-        border:1px solid blue;    
+        border:1px solid grey;    
 
-        .td {
-            max-width: 5px !important;
+        .seleciona{
+            display: flex;
+            align-items: center;
+            justify-content: left;
         }
         th {
-
+            
             color: #1879bf !important;
         }
-
-        #formSelect {
-          
-            max-width: 200px; 
-            margin: 0 auto; 
-        }
-       
-        /*REMOVE LINHAS HORIZONTAIS DA TABELA: */
+    
          td, th {
             border:none !important;
           } 
