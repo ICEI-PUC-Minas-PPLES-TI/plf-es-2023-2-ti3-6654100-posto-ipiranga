@@ -1,6 +1,6 @@
 import './Textfield.scss'
 
-const Textfield = ({vetor, textLabel, inputType, inputPlaceholder, mostrarSenha }) => {
+const Textfield = ({vetor, textLabel, inputType, inputPlaceholder, mostrarSenha, inputValue, inputOnchange, idName, maxL}) => {
 
     
     return(
@@ -10,7 +10,7 @@ const Textfield = ({vetor, textLabel, inputType, inputPlaceholder, mostrarSenha 
             <label>{textLabel}</label>
             </div>
             <div className='input-block'>
-            <input type={inputType} placeholder={inputPlaceholder}/> {mostrarSenha}
+            <input autoComplete='off'  maxLength={maxL} id={idName} onInput={inputOnchange} value={inputValue} type={inputType} placeholder={inputPlaceholder}/> {mostrarSenha}
             </div>
         </div>
     )

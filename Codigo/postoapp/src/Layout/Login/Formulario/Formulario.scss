@@ -1,7 +1,9 @@
 .formulario-login{
     border-radius: 10px;
     margin-top: 3vh;
-    border-radius: 10px;
+    border-radius: 10px; 
+
+    animation: aparecerLogin 1s ease-in-out;
 
 .card-top {
     background-color: #088eef;
@@ -47,5 +49,4 @@
             }
         }      
     }
-
 }
