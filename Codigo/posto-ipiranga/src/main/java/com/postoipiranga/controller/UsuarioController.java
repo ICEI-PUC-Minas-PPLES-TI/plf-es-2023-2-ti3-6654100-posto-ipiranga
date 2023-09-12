@@ -3,7 +3,11 @@ package com.postoipiranga.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.postoipiranga.controller.dto.LoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,12 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.postoipiranga.model.UsuarioModel;
 import com.postoipiranga.service.UsuarioService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/usuarios") 
 public class UsuarioController {
 
     @Autowired
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<UsuarioModel> getAllUsuarios() {
@@ -34,15 +43,15 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public UsuarioModel createUsuario(@RequestBody UsuarioModel usuarioModel) {
+    public UsuarioModel createUsuario(@RequestBody @Valid UsuarioModel usuarioModel) {
+        usuarioModel.setSenha(passwordEncoder.encode(usuarioModel.getSenha()));
         return usuarioService.save(usuarioModel);
     }
 
     @PutMapping("/{id}")
-    public UsuarioModel updateUsuario(@PathVariable long id, @RequestBody UsuarioModel usuarioModel) {
-        // Check if the usuario with the given ID exists, and then update it
+    public UsuarioModel updateUsuario(@PathVariable long id, @RequestBody @Valid UsuarioModel usuarioModel) {
         if (usuarioService.existsById(id)) {
-            usuarioModel.setId(id); // Ensure the ID is set correctly
+            usuarioModel.setId(id);
             return usuarioService.save(usuarioModel);
         } else {
             throw new IllegalArgumentException("Usuario with ID " + id + " not found.");
@@ -51,11 +60,24 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public Optional<UsuarioModel> deleteUsuario(@PathVariable long id) {
-        // Check if the usuario with the given ID exists, and then delete it
         if (usuarioService.existsById(id)) {
             return usuarioService.delete(id);
         } else {
             throw new IllegalArgumentException("Usuario with ID " + id + " not found.");
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDTO){
+
+        try {
+            final var result = usuarioService.autenticar(loginDTO.getEmail(), loginDTO.getSenha());
+
+            return ResponseEntity.ok().body(result);
+
+        }catch(RuntimeException e)
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e);
         }
     }
 }

@@ -25,15 +25,15 @@ public class UsuarioModel {
     @Column(length=150, nullable=false, unique=true)
     private String nomeCompleto;
     @Enumerated(EnumType.STRING)
-    @Column(length=20, nullable=false, unique=false)
+    @Column(length=20, nullable=false)
     private PerfilCliente perfil;
     @Column(length=100, nullable=false, unique=true)
     private String email;
-    @Column(length=11, nullable=false, unique=false)
+    @Column(length=11, nullable=false)
     private String telefone;
-    @Column(nullable=false, unique=false)
+    @Column(nullable=false)
     private Boolean status;
-    @Column(length=150, nullable=false, unique=false)
+    @Column(length=150, nullable=false)
     private String senha;
 
 }

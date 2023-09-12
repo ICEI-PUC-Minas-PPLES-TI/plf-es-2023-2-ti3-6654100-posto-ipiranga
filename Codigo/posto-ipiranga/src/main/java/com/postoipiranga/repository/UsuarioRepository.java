@@ -7,4 +7,6 @@ import com.postoipiranga.model.UsuarioModel;
 @Repository
 public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long>{
     boolean existsById(Long id);
+
+    UsuarioModel findByEmail(String email);
 }
