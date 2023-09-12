@@ -3,9 +3,14 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Textfield from '../../Components/public/Textfield';
 import BarraPesquisa from '../../Components/public/BarraPesquisa';
-import Tabela from '../../Components/public/Tabela'
+import Tabela from '../../Components/public/Tabela';
+import api from '../../service/apiCommunication';
+import { useEffect } from 'react';
 
 const ListarUsuarios = () => {
+    useEffect(() =>{
+        api.get("usuarios").then((res) => console.log(res.data));
+    });
     return(
         <main className="listausuarios">
             <div className='topbar'>
