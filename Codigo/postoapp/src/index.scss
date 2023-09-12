@@ -2,6 +2,9 @@
 
 :root {
   --main-font: 'Poppins', sans-serif;
+  --main-color: #ffd100;
+  --light-blue: #088eef;
+  --dark-blue: #1879bf;
 }
 
 @mixin flexCenter($flex-direction){

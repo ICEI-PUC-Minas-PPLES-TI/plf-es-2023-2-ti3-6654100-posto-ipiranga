@@ -128,7 +128,7 @@ const Formulario = () => {
 
 
                   try {
-                    const response = await fetch('https://api.example.com/postEndpoint', {
+                    const response = await fetch('http://localhost:3000/usuarios/cadastro', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',

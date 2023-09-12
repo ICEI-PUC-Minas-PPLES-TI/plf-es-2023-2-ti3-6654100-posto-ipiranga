@@ -90,13 +90,15 @@ const Formulario = () => {
         console.log(dadosUsuario);
       
         try {
-          const response = await fetch('https://api.example.com/postEndpoint', {
+          const response = await fetch('http://localhost:3000/usuarios/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(dadosUsuario),
-          });
+          }).then(() => {
+            localStorage.setItem('status', 'logado');
+          })
       
           if (!response.ok) {
             throw new Error('Não foi possível enviar os dados');
