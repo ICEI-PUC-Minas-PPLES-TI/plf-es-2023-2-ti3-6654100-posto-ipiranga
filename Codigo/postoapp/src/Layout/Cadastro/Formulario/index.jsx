@@ -19,11 +19,17 @@ const Formulario = () => {
     const [inputEmail, setInputEmail] = useState('')
     const [inputTelefone, setInputTelefone] = useState('')
     const [inputSenha, setInputSenha] = useState('')
-    const [dadosUsuario, setDadosUsuario] = useState({    nome: '',
+    const [inputPerfil, setInputPerfil] = useState('')
+    const [inputStatus, setInputStatus] = useState('')
+    const [dadosUsuario, setDadosUsuario] = useState({    nomeCompleto: '',
+        perfil: 'ADMINISTRADOR' ,
         email: '',
         telefone: '', 
+        status: true,
         senha: ''
     })
+
+ 
 
     function mostrarSenha() {
         if(senhaStatus == 'password'){
@@ -71,9 +77,11 @@ const Formulario = () => {
             setInputSenha(e.target.value)
             break;
         }
-        setDadosUsuario({    nome: inputNome,
+        setDadosUsuario({    nomeCompleto: inputNome,
+            perfil: 'ADMINISTRADOR',
             email: inputEmail,
             telefone: inputTelefone, 
+            status: true,
             senha: inputSenha
         })
     }
@@ -81,6 +89,9 @@ const Formulario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+        const telefoneNumerico = dadosUsuario.telefone.replace(/\D/g, '');
+
+      dadosUsuario.telefone = telefoneNumerico;
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         
               if (!inputEmail || !inputSenha || !inputTelefone || !inputNome) {
@@ -128,7 +139,7 @@ const Formulario = () => {
 
 
                   try {
-                    const response = await fetch('http://localhost:3000/usuarios/cadastro', {
+                    const response = await fetch('http://localhost:7000/usuarios', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
