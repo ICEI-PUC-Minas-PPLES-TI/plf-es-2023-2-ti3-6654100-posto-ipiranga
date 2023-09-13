@@ -10,7 +10,7 @@ const Textfield = ({vetor, textLabel, inputType, inputPlaceholder, mostrarSenha,
             <label>{textLabel}</label>
             </div>
             <div className='input-block'>
-            <input autoComplete='off'  maxLength={maxL} id={idName} onInput={inputOnchange} value={inputValue} type={inputType} placeholder={inputPlaceholder}/> {mostrarSenha}
+            <input autoComplete='off'  maxLength={maxL} id={idName} onChange={inputOnchange} value={inputValue} type={inputType} placeholder={inputPlaceholder}/> {mostrarSenha}
             </div>
         </div>
     )

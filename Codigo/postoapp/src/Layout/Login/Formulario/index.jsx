@@ -1,26 +1,23 @@
 import '../../../Components/public/Logo'
 import Textfield from '../../../Components/public/Textfield';
 import './Formulario.scss'  
-import { faE, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Botao from '../../../Components/public/Botao';
 import Swal from 'sweetalert2';
-import React, { useEffect,  useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const Formulario = () => {
     const [senhaStatus, setSenhaStatus] = useState('password')
     const [senhaIcone, setSenhaIcone] = useState(faEyeSlash)
-    const [inputEmail, setInputEmail] = useState('')
-    const [inputSenha, setInputSenha] = useState('')
     const [dadosUsuario, setDadosUsuario] = useState({ 
         email: '',
         senha: ''
     })
     const [emailRecuperação, setEmailRecuperacao] = useState('')
+    const navigate = useNavigate();
 
     function mostrarSenha() {
         if(senhaStatus == 'password'){
@@ -33,22 +30,18 @@ const Formulario = () => {
         }
     }
 
-    function aoDigitado(e) {  
-        switch(e.target.id){
-
-        case 'email': 
-            setInputEmail(e.target.value)
-            break
-
-        case 'senha': 
-            setInputSenha(e.target.value)
-            break;
-        }
-        setDadosUsuario({   
-            email: inputEmail,  
-            senha: inputSenha
-        })
+    function aoDigitado(e) {
+      switch (e.target.id) {
+        case 'email':
+          setDadosUsuario({ ...dadosUsuario, email: e.target.value });
+          break;
+    
+        case 'senha':
+          setDadosUsuario({ ...dadosUsuario, senha: e.target.value });
+          break;
+      }
     }
+    
 
     function esqueciSenha() {
       Swal.fire({
@@ -67,18 +60,19 @@ const Formulario = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        console.log(dadosUsuario)
+          
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-        if (!inputEmail || !inputSenha) {
+        if (!dadosUsuario.email || !dadosUsuario.senha) {
           Swal.fire({
             icon: 'error',
             title: 'Erro',
-            text: 'Por favor, preencha todos os campos.',
+            text: 'Por favor, preenchsa todos os campos.',
           });
           return;
         }
-        else if (!emailRegex.test(inputEmail)) {
+        else if (!emailRegex.test(dadosUsuario.email)) {
             Swal.fire({
               icon: 'error',
               title: 'Erro',
@@ -86,31 +80,29 @@ const Formulario = () => {
             });
             return;
           }
-    
-        console.log(dadosUsuario);
       
-        try {
-          const response = await fetch('http://localhost:7000/usuarios/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dadosUsuario),
-          }).then(() => {
-            localStorage.setItem('status', 'logado');
-          })
-      
-          if (!response.ok) {
-            throw new Error('Não foi possível enviar os dados');
+          try {
+            const response = await fetch('http://localhost:7000/usuarios/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(dadosUsuario),
+            });
+          
+            if (!response.ok) {
+              throw new Error('Não foi possível enviar os dados');
+            }
+            await response.json();           
+            navigate('/listausuarios');
+          
+          } catch (error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Erro ao enviar os dados',
+              text: error.message,
+            });
           }
-          const responseData = await response.json();
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Erro ao enviar os dados',
-            text: error.message,
-          });
-        }
       };
       
 
@@ -127,7 +119,7 @@ const Formulario = () => {
               vetor={<FontAwesomeIcon icon={faEnvelope} style={{ color: 'white' }} />}
               textLabel={'Email'}
               inputType={'email'}
-              inputValue={inputEmail}
+              inputValue={dadosUsuario.email}
               inputOnchange={aoDigitado}
               inputPlaceholder={'Digite o seu email'}
               idName={'email'}
@@ -138,7 +130,7 @@ const Formulario = () => {
                 vetor={<FontAwesomeIcon icon={faLock} style={{ color: 'white' }} />}
                 textLabel={'Senha'}
                 inputType={senhaStatus}
-                inputValue={inputSenha}
+                inputValue={dadosUsuario.senha}
                 inputOnchange={aoDigitado}
                 inputPlaceholder={'Digite a sua senha'}
                 idName={'senha'}

@@ -62,39 +62,34 @@ const Formulario = () => {
     function aoDigitado(e) {  
         switch(e.target.id){
         case 'nome':
-            setInputNome(e.target.value);
+          setDadosUsuario({ ...dadosUsuario, nomeCompleto: e.target.value });
             break;
 
-        case 'email': 
-            setInputEmail(e.target.value)
-            break
+            case 'email':
+              setDadosUsuario({ ...dadosUsuario, email: e.target.value });
+              break;
 
         case 'telefone': 
-            setInputTelefone(formatarTelefone(e.target.value))
+        setDadosUsuario({ ...dadosUsuario, telefone: formatarTelefone(e.target.value) });
             break;
 
-        case 'senha': 
-            setInputSenha(e.target.value)
-            break;
-        }
-        setDadosUsuario({    nomeCompleto: inputNome,
-            perfil: 'ADMINISTRADOR',
-            email: inputEmail,
-            telefone: inputTelefone, 
-            status: true,
-            senha: inputSenha
-        })
+            case 'senha':
+              setDadosUsuario({ ...dadosUsuario, senha: e.target.value });
+              break;
+          }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         
+      console.log(dadosUsuario)
         const telefoneNumerico = dadosUsuario.telefone.replace(/\D/g, '');
 
       dadosUsuario.telefone = telefoneNumerico;
+
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         
-              if (!inputEmail || !inputSenha || !inputTelefone || !inputNome) {
+              if ( !dadosUsuario.email|| !dadosUsuario.senha || !dadosUsuario.telefone || !dadosUsuario.nome ) {
                 Swal.fire({
                   icon: 'error',
                   title: 'Erro',
@@ -102,7 +97,7 @@ const Formulario = () => {
                 });
                 return;
               }
-              else if (!emailRegex.test(inputEmail)) {
+              else if (!emailRegex.test(dadosUsuario.email)) {
                   Swal.fire({
                     icon: 'error',
                     title: 'Erro',
@@ -110,7 +105,7 @@ const Formulario = () => {
                   });
                   return;
                 }
-                else if (inputSenha.length < 6) {
+                else if (dadosUsuario.senha.length < 6) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Erro',
@@ -119,7 +114,7 @@ const Formulario = () => {
                     return;
                   }
 
-                  else if (inputNome.length < 5) {
+                  else if (dadosUsuario.nomeCompleto.length < 5) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Erro',
@@ -128,7 +123,7 @@ const Formulario = () => {
                     return;     
                   }
 
-                  else if (inputTelefone.length < 11) {
+                  else if (dadosUsuario.telefone.length < 11) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Erro',
@@ -172,7 +167,7 @@ const Formulario = () => {
               vetor={<FontAwesomeIcon icon={faUser} style={{ color: 'white' }} />}
               textLabel={'Nome completo'}
               inputType={'text'}
-              inputValue={inputNome}
+              inputValue={dadosUsuario.nomeCompleto}
               inputOnchange={aoDigitado}
               inputPlaceholder={'Digite o seu email'}
               idName={'nome'}
@@ -182,7 +177,7 @@ const Formulario = () => {
               vetor={<FontAwesomeIcon icon={faEnvelope} style={{ color: 'white' }} />}
               textLabel={'Email'}
               inputType={'email'}
-              inputValue={inputEmail}
+              inputValue={dadosUsuario.email}
               inputOnchange={aoDigitado}
               inputPlaceholder={'Digite o seu email'}
               idName={'email'}
@@ -192,7 +187,7 @@ const Formulario = () => {
               vetor={<FontAwesomeIcon icon={faPhone} style={{ color: 'white' }} />}
               textLabel={'Telefone'}
               inputType={'text'}
-              inputValue={inputTelefone}
+              inputValue={dadosUsuario.telefone}
               inputOnchange={aoDigitado}
               inputPlaceholder={'Digite o seu telefone'}
               idName={'telefone'}
@@ -204,7 +199,7 @@ const Formulario = () => {
                 vetor={<FontAwesomeIcon icon={faLock} style={{ color: 'white' }} />}
                 textLabel={'Senha'}
                 inputType={senhaStatus}
-                inputValue={inputSenha}
+                inputValue={dadosUsuario.senha}
                 inputOnchange={aoDigitado}
                 inputPlaceholder={'Digite a sua senha'}
                 mostrarSenha={<FontAwesomeIcon onClick={mostrarSenha} className='senha' icon={senhaIcone} style={{ color: 'white' }} />}
