@@ -90,7 +90,7 @@ const Formulario = () => {
         console.log(dadosUsuario);
       
         try {
-          const response = await fetch('http://localhost:3000/usuarios/login', {
+          const response = await fetch('http://localhost:7000/usuarios/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

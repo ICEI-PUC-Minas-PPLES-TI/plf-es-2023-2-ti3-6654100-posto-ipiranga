@@ -9,7 +9,8 @@ function App() {
     <Router>
       <Routes>
       <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/listausuarios" element={<PrivateRoute element={ListarUsuarios} />} />
+     {/* <Route path="/listausuarios" element={<PrivateRoute element={ListarUsuarios} />} /> */}
+           <Route path="/listausuarios" element={<ListarUsuarios />} />
         <Route path="/" element={<Login />} />
       </Routes>
     </Router> 
