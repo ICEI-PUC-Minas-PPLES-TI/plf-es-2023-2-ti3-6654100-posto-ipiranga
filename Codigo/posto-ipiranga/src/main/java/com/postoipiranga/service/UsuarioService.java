@@ -3,6 +3,7 @@ package com.postoipiranga.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.postoipiranga.helper.PerfilCliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,13 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Transactional
-    public UsuarioModel save(UsuarioModel usuarioModel) { 
+    public UsuarioModel save(UsuarioModel usuarioModel) {
+
+        final var existePerfilAdm = usuarioRepository.existsByPerfil(usuarioModel.getPerfil());
+
+        if(existePerfilAdm)
+            usuarioModel.setPerfil(PerfilCliente.CONSULTA);
+
         return usuarioRepository.save(usuarioModel);
     }
 
