@@ -22,14 +22,14 @@ public class UsuarioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length=150, nullable=false, unique=true)
+    @Column(length=150, nullable=false)
     private String nomeCompleto;
     @Enumerated(EnumType.STRING)
     @Column(length=20, nullable=false)
     private PerfilCliente perfil;
     @Column(length=100, nullable=false, unique=true)
     private String email;
-    @Column(length=11, nullable=false)
+    @Column(length=11, nullable=false, unique=true)
     private String telefone;
     @Column(nullable=false)
     private Boolean status;
