@@ -50,7 +50,7 @@ public class UsuarioService {
     public UsuarioModel autenticar(String email, String senha) {
         UsuarioModel usuario = usuarioRepository.findByEmail(email);
 
-        if (usuario != null && usuario.getSenha() == senha) {
+        if (usuario != null && usuario.getSenha().equals(senha)) {
             return usuario;
         }
 
