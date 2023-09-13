@@ -11,16 +11,11 @@ import { faPhone } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Botao from '../../../Components/public/Botao';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const Formulario = () => {
     const [senhaStatus, setSenhaStatus] = useState('password')
     const [senhaIcone, setSenhaIcone] = useState(faEyeSlash)
-    const [inputNome, setInputNome] = useState('')
-    const [inputEmail, setInputEmail] = useState('')
-    const [inputTelefone, setInputTelefone] = useState('')
-    const [inputSenha, setInputSenha] = useState('')
-    const [inputPerfil, setInputPerfil] = useState('')
-    const [inputStatus, setInputStatus] = useState('')
     const [dadosUsuario, setDadosUsuario] = useState({    nomeCompleto: '',
         perfil: 'ADMINISTRADOR' ,
         email: '',
@@ -28,7 +23,7 @@ const Formulario = () => {
         status: true,
         senha: ''
     })
-
+    const navigate = useNavigate();
  
 
     function mostrarSenha() {
@@ -69,8 +64,8 @@ const Formulario = () => {
               setDadosUsuario({ ...dadosUsuario, email: e.target.value });
               break;
 
-        case 'telefone': 
-        setDadosUsuario({ ...dadosUsuario, telefone: formatarTelefone(e.target.value) });
+            case 'telefone': 
+            setDadosUsuario({ ...dadosUsuario, telefone: formatarTelefone(e.target.value) });
             break;
 
             case 'senha':
@@ -88,8 +83,9 @@ const Formulario = () => {
       dadosUsuario.telefone = telefoneNumerico;
 
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        console.log(dadosUsuario)
         
-              if ( !dadosUsuario.email|| !dadosUsuario.senha || !dadosUsuario.telefone || !dadosUsuario.nome ) {
+              if ( !dadosUsuario.email|| !dadosUsuario.senha || !dadosUsuario.telefone || !dadosUsuario.nomeCompleto ) {
                 Swal.fire({
                   icon: 'error',
                   title: 'Erro',
@@ -145,6 +141,17 @@ const Formulario = () => {
                     if (!response.ok) {
                       throw new Error('Não foi possível enviar os dados');
                     }
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Sucesso!',
+                      text: 'Cadastro realizado com sucesso!',
+                      confirmButtonText: 'OK',
+                    }).then((result) => {
+                      if (result.isConfirmed) {                 
+                          navigate('/');
+                      }
+                    });
+                    
                     const responseData = await response.json();
                   } catch (error) {
                     Swal.fire({

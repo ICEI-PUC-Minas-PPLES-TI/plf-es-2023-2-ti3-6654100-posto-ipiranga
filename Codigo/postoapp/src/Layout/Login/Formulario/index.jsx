@@ -59,52 +59,56 @@ const Formulario = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(dadosUsuario)
-          
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-        if (!dadosUsuario.email || !dadosUsuario.senha) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Erro',
-            text: 'Por favor, preenchsa todos os campos.',
-          });
-          return;
+      e.preventDefault();
+      console.log(dadosUsuario);
+    
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    
+      if (!dadosUsuario.email || !dadosUsuario.senha) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro',
+          text: 'Por favor, preencha todos os campos.',
+        });
+        return;
+      } else if (!emailRegex.test(dadosUsuario.email)) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro',
+          text: 'O email não está em um formato correto',
+        });
+        return;
+      }
+    
+      try {
+        const response = await fetch('http://localhost:7000/usuarios/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dadosUsuario),
+        });
+    
+        if (!response.ok) {
+          throw new Error('Não foi possível enviar os dados');
         }
-        else if (!emailRegex.test(dadosUsuario.email)) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Erro',
-              text: 'O email não está em um formato correto',
-            });
-            return;
-          }
-      
-          try {
-            const response = await fetch('http://localhost:7000/usuarios/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(dadosUsuario),
-            });
-          
-            if (!response.ok) {
-              throw new Error('Não foi possível enviar os dados');
-            }
-            await response.json();           
-            navigate('/listausuarios');
-          
-          } catch (error) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Erro ao enviar os dados',
-              text: error.message,
-            });
-          }
-      };
-      
+    
+        const responseData = await response.json();
+        
+        localStorage.setItem('status', 'logado')
+        localStorage.setItem('userID', responseData.id);
+        console.log(localStorage.getItem('userID'))
+
+        navigate('/listausuarios');
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Erro ao enviar os dados',
+          text: error.message,
+        });
+      }
+    };
+    
 
 
 
