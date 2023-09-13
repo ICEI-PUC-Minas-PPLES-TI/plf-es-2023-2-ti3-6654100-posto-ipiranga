@@ -1,4 +1,4 @@
-spring: 
+spring:
   jpa:
     database: POSTGRESQL
     show-sql: true
@@ -6,10 +6,10 @@ spring:
       ddl-auto: create-drop
   datasource:
     platform: tis_prod
-    url: ${db-url}
-    username: tis_prod
-    password: 12345
+    url: jdbc:postgresql://localhost:5432/tis_prod
+    username: postgres
+    password: pablgui
   database:
     driverClassName: org.postgresql.Driver
 server:
-  port: ${port}
+  port: 7000
