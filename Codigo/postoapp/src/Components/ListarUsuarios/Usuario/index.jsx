@@ -88,22 +88,22 @@ const Usuario = ({email}) => {
                 html: `
                     <div class="textfield-alterar-dados">
                     <label class="label">Nome Completo </label>
-                  <input id="nome" class="swal2-input" placeholder="Nome Completo" value="${dadosUsuario.nomeCompleto}">
+                  <input maxlength="100" id="nome" class="swal2-input" placeholder="Nome Completo" value="${dadosUsuario.nomeCompleto}">
                     </div>
                     
                     <div class="textfield-alterar-dados">
                   <label class="label">Email </label>
-                  <input id="email" class="swal2-input" placeholder="Email" value="${dadosUsuario.email || ''}">
+                  <input maxlength="100"  id="email" class="swal2-input" placeholder="Email" value="${dadosUsuario.email || ''}">
                   </div>
 
                   <div class="textfield-alterar-dados">
                   <label class="label">Telefone </label>
-                  <input id="telefone" class="swal2-input" placeholder="Telefone" value="${dadosUsuario.telefone || ''}">
+                  <input  maxlength="15" id="telefone" class="swal2-input" type="text" placeholder="Telefone" value="${dadosUsuario.telefone || ''}">
                   </div>
 
                   <div class="textfield-alterar-dados">
                   <label class="label">Senha </label>
-                  <input id="senha" class="swal2-input" placeholder="Senha" type="password" value="${dadosUsuario.senha || ''}">
+                  <input maxlength="50" id="senha" class="swal2-input" placeholder="Senha" type="text" value="${dadosUsuario.senha || ''}">
                   </div> 
                   
                   `,
@@ -116,10 +116,10 @@ const Usuario = ({email}) => {
                 preConfirm: () => {
                   let nomeCompleto = document.getElementById('nome').value;
                   let email = document.getElementById('email').value;
-                  let telefone = document.getElementById('telefone').value;
+                  let telefone = document.getElementById('telefone').value;;
                   let senha = document.getElementById('senha').value;
                   let status = true
-                  let perfil = dadosUsuario.perfil                                             
+                  let perfil = dadosUsuario.perfil     
 
                   telefone = telefone.replace(/\D/g, '');
               
@@ -189,10 +189,10 @@ const Usuario = ({email}) => {
               });
               
     }
-    
+    var truncatedEmail = (email.length > 22) ? email.slice(0, 22) + '...' : email;
     return(
-        <div className="col-md-12 usuario" style={{}}>
-            <span>Logado como: <br/>{email}</span>
+        <div className="col-md-12 usuario container-fluid" style={{}}>
+            <span>Logado como: <br/>{truncatedEmail}</span>
             <br/>
             <a onClick={handleClick} id='verPerfil'>Ver perfil</a>
         </div> 

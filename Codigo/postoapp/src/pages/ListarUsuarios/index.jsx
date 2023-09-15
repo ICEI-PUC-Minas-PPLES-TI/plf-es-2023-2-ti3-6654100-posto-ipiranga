@@ -15,7 +15,7 @@ const ListarUsuarios = () => {
             <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem'}}>
                   <LeftNavMenu />
             </div>
-            <div className='topbar col-md-8'>
+            <div className='topbar col-md-9'>
        
                 <h1 id="titulo">Listagem de Usuários</h1>
                 <BarraPesquisa
