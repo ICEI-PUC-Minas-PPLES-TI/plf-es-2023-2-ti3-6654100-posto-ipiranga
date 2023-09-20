@@ -5,17 +5,19 @@ import { faEnvelope, faLock, faEyeSlash, faEye } from '@fortawesome/free-solid-s
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Botao from '../../../Components/public/Botao';
 import Swal from 'sweetalert2';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../../Context/UserContext';
 
 
 const Formulario = () => {
     const [senhaStatus, setSenhaStatus] = useState('password')
     const [senhaIcone, setSenhaIcone] = useState(faEyeSlash)
+    const {dadosUserContext, setDadosUserContext} = useContext(UserContext);
     const [dadosUsuario, setDadosUsuario] = useState({ 
-        email: '',
-        senha: ''
-    })
+      email: '',
+      senha: ''
+    });
     const [emailRecuperação, setEmailRecuperacao] = useState('')
     const navigate = useNavigate();
 
@@ -94,7 +96,10 @@ const Formulario = () => {
         }
     
         const responseData = await response.json();
-        
+        setDadosUserContext({
+          status: 'logado',
+          userId: responseData.id
+        })
         localStorage.setItem('status', 'logado')
         localStorage.setItem('userID', responseData.id);
         console.log(localStorage.getItem('userID'))
