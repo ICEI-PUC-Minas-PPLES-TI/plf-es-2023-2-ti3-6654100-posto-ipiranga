@@ -25,7 +25,7 @@ spring:
   datasource:
     url: jdbc:postgresql://silly.db.elephantsql.com:5432/moljttsr
     username: moljttsr
-    password: 12345
+    password: YA3fCSC63zCRq5YcqcyM8MGB_aGG_8Xc
   database:
     driverClassName: org.postgresql.Driver
 server:
