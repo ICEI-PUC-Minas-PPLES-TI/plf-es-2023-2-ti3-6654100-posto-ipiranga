@@ -1,35 +1,26 @@
 package com.postoipiranga.model;
 
-import com.postoipiranga.helper.PerfilCliente;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="PRODUTO")
+@Table(name = "PRODUTO")
 @Getter
 @Setter
 public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length=150, nullable=false)
+    @Column(length = 150, nullable = false)
     private String nome;
-    @Column(length=150, nullable=true)
+    @Column(length = 150)
     private String marca;
-    @Column(length=150, nullable=false)
+    @Column(length = 150, nullable = false)
     private String unidadeMedida;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Long quantidade;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private Long preco;
 
 }

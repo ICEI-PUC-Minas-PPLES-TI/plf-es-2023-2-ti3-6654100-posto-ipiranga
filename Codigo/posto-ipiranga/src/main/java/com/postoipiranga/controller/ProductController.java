@@ -1,61 +1,98 @@
 package com.postoipiranga.controller;
 
-import java.util.List;
-import java.util.Optional;
+import com.postoipiranga.controller.dto.MessageDTO;
+import com.postoipiranga.model.ProductModel;
+import com.postoipiranga.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import com.postoipiranga.controller.dto.LoginDTO;
-import com.postoipiranga.model.ProductModel;
-import com.postoipiranga.model.UsuarioModel;
-import com.postoipiranga.service.ProductService;
-import com.postoipiranga.service.UsuarioService;
-
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/produtos")
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
-    public List<ProductModel> getAllUsuarios() {
-        return productService.findAll();
+    public ResponseEntity<?> getAllProducts() {
+
+        try {
+            final var response = productService.findAll();
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{id}")
-    public Optional<ProductModel> getUsuarioById(@PathVariable long id) {
-        return productService.findById(id);
+    public ResponseEntity<?> getProductById(@PathVariable @Valid final long id) {
+
+        try {
+            final var response = productService.findById(id);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public ProductModel createUsuario(@RequestBody @Valid ProductModel productModel) {
-        return productService.save(productModel);
+    public ResponseEntity<?> createProduct(@RequestBody @Valid final ProductModel productModel) {
+
+        try {
+            final var response = productService.save(productModel);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e);
+        }
     }
 
     @PutMapping("/{id}")
-    public ProductModel updateUsuario(@PathVariable long id, @RequestBody @Valid ProductModel productModel) {
-        if (productService.existsById(id)) {
-            productModel.setId(id);
-            return productService.save(productModel);
-        } else {
-            throw new IllegalArgumentException("Produto with ID " + id + " not found.");
+    public ResponseEntity<?> updateProduto(@PathVariable final long id, @RequestBody @Valid final ProductModel productModel) {
+
+        try {
+
+            if (productService.existsById(id)) {
+                productModel.setId(id);
+            } else {
+                final var message = new MessageDTO("Product with ID " + id + " not found.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            }
+
+            final var response = productService.save(productModel);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e);
         }
     }
 
     @DeleteMapping("/{id}")
-    public Optional<ProductModel> deleteProduto(@PathVariable long id) {
-        if (productService.existsById(id)) {
-            return productService.delete(id);
-        } else {
-            throw new IllegalArgumentException("Produto with ID " + id + " not found.");
+    public ResponseEntity<?> deleteProduto(@PathVariable final long id) {
+
+        try {
+
+            if (productService.existsById(id)) {
+
+                final var response = productService.delete(id);
+
+                return ResponseEntity.ok(response);
+            } else {
+                final var message = new MessageDTO("Product with ID " + id + " not found.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e);
         }
     }
 }
