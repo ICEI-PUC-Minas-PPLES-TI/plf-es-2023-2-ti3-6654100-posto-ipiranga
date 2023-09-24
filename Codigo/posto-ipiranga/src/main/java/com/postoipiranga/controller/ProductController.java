@@ -57,7 +57,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduto(@PathVariable final long id, @RequestBody @Valid final ProductModel productModel) {
+    public ResponseEntity<?> updateProduct(@PathVariable final long id, @RequestBody @Valid final ProductModel productModel) {
 
         try {
 
@@ -78,7 +78,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduto(@PathVariable final long id) {
+    public ResponseEntity<?> deleteProduct(@PathVariable final long id) {
 
         try {
 
