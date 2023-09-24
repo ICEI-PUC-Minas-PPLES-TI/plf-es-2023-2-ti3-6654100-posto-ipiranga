@@ -36,9 +36,13 @@ public class ProductController {
     public ResponseEntity<?> getProductById(@PathVariable @Valid final long id) {
 
         try {
-            final var response = productService.findById(id);
-
-            return ResponseEntity.ok(response);
+            if(productService.existsById(id)){
+                final var response = productService.findById(id);
+                return ResponseEntity.ok(response);
+            }else{
+                final var message = new MessageDTO("Product with ID " + id + " not found.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            }
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
