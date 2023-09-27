@@ -2,12 +2,7 @@ import { useState } from 'react';
 import '../../../Components/public/Logo'
 import Textfield from '../../../Components/public/Textfield';
 import './Formulario.scss'  
-import { faE, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faPhone, faEyeSlash, faEye, faLock, faEnvelope  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Botao from '../../../Components/public/Botao';
 import Swal from 'sweetalert2';

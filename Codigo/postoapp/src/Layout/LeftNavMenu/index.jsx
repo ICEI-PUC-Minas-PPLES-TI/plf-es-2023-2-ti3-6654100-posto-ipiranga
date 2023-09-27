@@ -1,6 +1,6 @@
 import Logo from "../../Components/public/Logo"
 import ItemList from "../../Components/public/ItemList"
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faList } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Usuario from "../../Components/ListarUsuarios/Usuario";
 import { useEffect, useState } from 'react';
@@ -15,6 +15,11 @@ const LeftNavMenu = () => {
         senha: ""
       });
       
+    const [selectedItem, setSelectedItem] = useState(localStorage.getItem('itemMenu'));
+  
+    const alterarSelecionado = (selecionado) => {
+      localStorage.setItem('itemMenu', selecionado);
+    }
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -31,7 +36,7 @@ const LeftNavMenu = () => {
             }
       
             const responseData = await response.json();
-            console.log(responseData);
+            
       
             setDadosUsuario((prevDadosUsuario) => ({
               ...prevDadosUsuario,
@@ -66,7 +71,6 @@ const LeftNavMenu = () => {
       
       }, []); 
 
-
     return(
    
         <nav className="left-menu ">
@@ -79,11 +83,21 @@ const LeftNavMenu = () => {
                 email = {dadosUsuario.email}
                  />
            
-                <ItemList 
-                icone={<FontAwesomeIcon icon={faUser} style={{ color: 'var(--dark-blue)' }} />}
-                categoriaNome={'Controle de Usuários'}
-                categoriaPath={'listausuarios'}
-                />
+           <ItemList
+            icone={<FontAwesomeIcon icon={faUser} style={{ color: 'var(--dark-blue)' }} />}
+            categoriaNome={'Controle de Usuários'}
+            categoriaPath={'listausuarios'}
+            selecionado={selectedItem === 'listausuarios'} 
+            clicado={() => alterarSelecionado('listausuarios')} 
+          />
+
+          <ItemList
+            icone={<FontAwesomeIcon icon={faList} style={{ color: 'var(--dark-blue)' }} />}
+            categoriaNome={'Controle de Estoque'}
+            categoriaPath={'listaprodutos'}
+            selecionado={selectedItem === 'listaprodutos'} 
+            clicado={() => alterarSelecionado('listaprodutos')} 
+          />
             </div>
         </nav>
 
