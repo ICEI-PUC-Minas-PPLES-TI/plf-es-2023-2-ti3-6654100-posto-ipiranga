@@ -21,6 +21,6 @@ public class ProductModel {
     @Column(nullable = false)
     private Long quantidade;
     @Column(nullable = false)
-    private Long preco;
+    private double preco;
 
 }

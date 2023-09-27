@@ -386,7 +386,7 @@ function recarregarPagina() {
         ))}
       </tbody> 
     </table>
-       <button className='adicionar' onClick={criarItem} style={{backgroundColor: 'var(--light-blue)'}}>Adicionar item</button>
+       <button style={{display: isUsuario? 'none' : 'flex', backgroundColor: 'var(--light-blue)'}} className='adicionar' onClick={criarItem} >Adicionar item</button>
        </>
   );
 }
