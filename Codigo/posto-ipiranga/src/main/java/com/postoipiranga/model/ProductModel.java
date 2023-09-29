@@ -19,8 +19,6 @@ public class ProductModel {
     @Column(length = 150, nullable = false)
     private String unidadeMedida;
     @Column(nullable = false)
-    private Long quantidade;
-    @Column(nullable = false)
     private double preco;
 
 }

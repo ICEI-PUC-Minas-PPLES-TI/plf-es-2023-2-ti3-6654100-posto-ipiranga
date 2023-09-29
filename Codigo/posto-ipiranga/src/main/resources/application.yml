@@ -3,12 +3,11 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
-    platform: tis_prod
     url: jdbc:postgresql://localhost:5432/tis_prod
-    username: postgres
-    password: 121201gui
+    username: tis_prod
+    password: 12345
   database:
     driverClassName: org.postgresql.Driver
 server:
