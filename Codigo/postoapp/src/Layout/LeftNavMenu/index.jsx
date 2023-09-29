@@ -79,25 +79,25 @@ const LeftNavMenu = () => {
             />
            <div className="col-md-12">
           
-                <Usuario 
-                email = {dadosUsuario.email}
-                 />
+            <Usuario 
+            email = {dadosUsuario.email}
+            />
            
-           <ItemList
-            icone={<FontAwesomeIcon icon={faUser} style={{ color: 'var(--dark-blue)' }} />}
-            categoriaNome={'Controle de Usuários'}
-            categoriaPath={'listausuarios'}
-            selecionado={selectedItem === 'listausuarios'} 
-            clicado={() => alterarSelecionado('listausuarios')} 
-          />
+            <ItemList
+              icone={<FontAwesomeIcon icon={faUser} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Controle de Usuários'}
+              categoriaPath={'listausuarios'}
+              selecionado={selectedItem === 'listausuarios'} 
+              clicado={() => alterarSelecionado('listausuarios')} 
+            />
 
-          <ItemList
-            icone={<FontAwesomeIcon icon={faList} style={{ color: 'var(--dark-blue)' }} />}
-            categoriaNome={'Controle de Estoque'}
-            categoriaPath={'listaprodutos'}
-            selecionado={selectedItem === 'listaprodutos'} 
-            clicado={() => alterarSelecionado('listaprodutos')} 
-          />
+            <ItemList
+              icone={<FontAwesomeIcon icon={faList} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Controle de Estoque'}
+              categoriaPath={'listaprodutos'}
+              selecionado={selectedItem === 'listaprodutos'} 
+              clicado={() => alterarSelecionado('listaprodutos')} 
+            />
             </div>
         </nav>
 
