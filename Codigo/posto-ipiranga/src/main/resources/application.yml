@@ -20,7 +20,7 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
     url: jdbc:postgresql://silly.db.elephantsql.com:5432/moljttsr
     username: moljttsr
