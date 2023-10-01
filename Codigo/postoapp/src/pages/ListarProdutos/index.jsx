@@ -28,7 +28,7 @@ const ListarProdutos = () => {
                     <BarraPesquisa />
 
                     <Tabela 
-                    url={'http://localhost:7000/produtos'}
+                    url={`${process.env.REACT_APP_API}/produtos`}
                     listaTh={listaThProdutos}
                     listaDados={listaDadosProdutos}
                     listaTypes={listaTypes}

@@ -33,7 +33,7 @@ const Usuario = ({email}) => {
       useEffect(() => {
         const fetchUserData = async () => {
           try {
-            const response = await fetch(`http://localhost:7000/usuarios/${localStorage.getItem('userID')}`, {
+            const response = await fetch(`${process.env.REACT_APP_API}/usuarios/${localStorage.getItem('userID')}`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ const Usuario = ({email}) => {
 
                   console.log(userData)
 
-                  fetch(`http://localhost:7000/usuarios/${localStorage.getItem('userID')}`, {
+                  fetch(`${process.env.REACT_APP_API}/usuarios/${localStorage.getItem('userID')}`, {
                     method: 'PUT',
                     headers: {
                       'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ const Usuario = ({email}) => {
               }).then(async (result) => {
                 if (result.dismiss === Swal.DismissReason.cancel) {
                   try {
-                    const response = await fetch(`http://localhost:7000/usuarios/${localStorage.getItem('userID')}`, {
+                    const response = await fetch(`${process.env.REACT_APP_API}/usuarios/${localStorage.getItem('userID')}`, {
                       method: 'DELETE',
                       headers: {
                         'Content-Type': 'application/json',

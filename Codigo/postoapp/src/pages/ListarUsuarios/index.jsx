@@ -38,7 +38,7 @@ const ListarUsuarios = () => {
                 vetor={ <FontAwesomeIcon icon={faSearch} style={{ color: '#1879bf', fontSize: '2.2rem', transform: 'scaleX(-1)' }} />}
                 />
             <Tabela 
-            url={'http://localhost:7000/usuarios'}
+            url={`${process.env.REACT_APP_API}/usuarios`}
             selectAtivo={true}
             checkAtivo={true}
             listaTh={listaThUsuarios}

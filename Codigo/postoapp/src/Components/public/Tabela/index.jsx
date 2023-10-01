@@ -218,7 +218,7 @@ function recarregarPagina() {
     
     lista[index].telefone = lista[index].telefone.replace(/\D/g, '');
 
-    fetch(`http://localhost:7000/usuarios/${lista[index].id}`, {
+    fetch(`${process.env.REACT_APP_API}/usuarios/${lista[index].id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ function recarregarPagina() {
 
     lista[index].telefone = lista[index].telefone.replace(/\D/g, '');
 
-    fetch(`http://localhost:7000/usuarios/${lista[index].id}`, {
+    fetch(`${process.env.REACT_APP_API}/usuarios/${lista[index].id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

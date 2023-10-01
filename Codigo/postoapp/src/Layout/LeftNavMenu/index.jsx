@@ -24,7 +24,7 @@ const LeftNavMenu = () => {
     useEffect(() => {
         const fetchUserData = async () => {
           try {
-            const response = await fetch(`http://localhost:7000/usuarios/${localStorage.getItem('userID')}`, {
+            const response = await fetch(`${process.env.REACT_APP_API}/usuarios/${localStorage.getItem('userID')}`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
