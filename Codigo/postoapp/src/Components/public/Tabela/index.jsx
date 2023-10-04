@@ -4,18 +4,12 @@ import Swal from 'sweetalert2';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Tabela = ({url, selectAtivo, checkAtivo, listaTh, listaDados, isUsuario, tipo }) => {
+const Tabela = ({url, selectAtivo, checkAtivo, listaTh, listaDados, listaTypes, isUsuario, tipo }) => {
 const [lista, setLista] = useState([]);
-const [listaEditar, setListaEditar] = useState([]);
 
 const [editarDisplay, setEditarDisplay] = useState('none')
-const [formValues, setFormValues] = useState({
-  descricao: '',
-  marca: '',
-  unidadeMedida: '',
-  quantidade: '',
-  preco: '',
-});
+const [formValues, setFormValues] = useState({});
+const dadosInput = Object.keys(formValues).filter((chave) => chave !== "id");
 const[titulo, setTitulo] = useState('')
 
 const deleteItem = (e) => {
@@ -60,29 +54,37 @@ const deleteItem = (e) => {
 
 const editarItem = (item) => {
   setEditarDisplay('flex');
-  setFormValues({
-    id: item.id,
-    descricao: item.nome,
-    marca: item.marca,
-    unidadeMedida: item.unidadeMedida,
-    quantidade: item.quantidade,
-    preco: item.preco,
+  const formValues = {};
+
+  for (const chave in item) {
+    if (item.hasOwnProperty(chave)) {
+      formValues[chave] = item[chave];
+    }
+  }
+
+
+  setFormValues(formValues);
+  setTitulo('Editar');
+}
+
+function criarFormValues(listaCampos) {
+  const formValues = {};
+
+  listaCampos.forEach((campo) => {
+    if (campo.toLowerCase() !== 'id') {
+      formValues[campo] = '';
+    }
   });
-  setTitulo('Editar')
+
+  console.log(formValues)
+  return formValues;
 }
 
 const criarItem = () => {
   setEditarDisplay('flex');
-  setFormValues({
-    descricao: '',
-    marca: '',
-    unidadeMedida: '',
-    quantidade: '',
-    preco: '',
-  });
+  setFormValues(criarFormValues(listaDados))
   setTitulo('Criar')
 }
-
 
 const handleInputChange = (event) => {
   const { name, value } = event.target;
@@ -94,21 +96,13 @@ const handleInputChange = (event) => {
 
 const salvar = () => {
 
-
-  const requestBody = {
-    nome: formValues.descricao,
-    marca: formValues.marca,
-    unidadeMedida: formValues.unidadeMedida,
-    quantidade: formValues.quantidade,
-    preco: formValues.preco,
-  };
   if(!formValues.id) {
     fetch(`${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestBody), 
+      body: JSON.stringify(formValues), 
     })
       .then((response) => {
         if (!response.ok) {
@@ -136,7 +130,7 @@ const salvar = () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(requestBody), 
+    body: JSON.stringify(formValues), 
   })
     .then((response) => {
       if (!response.ok) {
@@ -159,10 +153,10 @@ const salvar = () => {
   }
 };
 
-
 function recarregarPagina() {
   window.location.reload();
 }
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -187,7 +181,10 @@ function recarregarPagina() {
           return obj;
         });
 
+        resposta.sort((a, b) => a.id - b.id);
+
         setLista(resposta);
+
       } catch (error) {
         Swal.fire({
           icon: 'error',
@@ -199,7 +196,6 @@ function recarregarPagina() {
 
     fetchUserData();
   }, [url]);
-
 
   function formatarTelefone(telefone) {
     const numeroLimpo = telefone.replace(/\D/g, '');
@@ -214,20 +210,20 @@ function recarregarPagina() {
   }   
 
   const handleStatusChange = (index) => {
-    if (listaUsuarios[index].status === true) {
-      listaUsuarios[index].status = false;
+    if (lista[index].status === true) {
+      lista[index].status = false;
     } else {
-      listaUsuarios[index].status = true;
+      lista[index].status = true;
     }
     
-    listaUsuarios[index].telefone = listaUsuarios[index].telefone.replace(/\D/g, '');
+    lista[index].telefone = lista[index].telefone.replace(/\D/g, '');
 
-    fetch(`http://localhost:7000/usuarios/${listaUsuarios[index].id}`, {
+    fetch(`http://localhost:7000/usuarios/${lista[index].id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(listaUsuarios[index]),
+      body: JSON.stringify(lista[index]),
     })
       .then((response) => {
         if (response.ok) {
@@ -246,16 +242,16 @@ function recarregarPagina() {
   };
 
   const handlePerfilChange = (index, value) => {
-    listaUsuarios[index].perfil = value;
+    lista[index].perfil = value;
 
-    listaUsuarios[index].telefone = listaUsuarios[index].telefone.replace(/\D/g, '');
+    lista[index].telefone = lista[index].telefone.replace(/\D/g, '');
 
-    fetch(`http://localhost:7000/usuarios/${listaUsuarios[index].id}`, {
+    fetch(`http://localhost:7000/usuarios/${lista[index].id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(listaUsuarios[index]),
+      body: JSON.stringify(lista[index]),
     })
       .then((response) => {
         if (response.ok) {
@@ -274,50 +270,26 @@ function recarregarPagina() {
       });
   };
 
-  
   return (
     <>
     <table className="table">
     <div className='modal' style={{display: editarDisplay}}>
       <h1>{titulo} {tipo}</h1>
-      <label>Descrição</label>
-      <input
-        type="text"
-        name="descricao"
-        value={formValues.descricao}
-        onChange={handleInputChange}
-      />
-      <label>Marca</label>
-      <input
-        type="text"
-        name="marca"
-        value={formValues.marca}
-        onChange={handleInputChange}
-      />
-      <label>Unidade de medida</label>
-      <input
-        type="text"
-        name="unidadeMedida"
-        value={formValues.unidadeMedida}
-        onChange={handleInputChange}
-      />
-      <label>Quantidade</label>
-      <input
-        type="number"
-        name="quantidade"
-        value={formValues.quantidade}
-        onChange={handleInputChange}
-      />
-      <label>Preço</label>
-      <input
-        type="number"
-        name="preco"
-        value={formValues.preco}
-        onChange={handleInputChange}
-      />
+              {dadosInput.map((chave, index) => (
+          <div className='textfield-modal' key={index}>
+            <label className='label-modal'>{listaTh[index+1]}</label>
+            <input
+              className='input-modal'
+              type={listaTypes[index]}
+              name={chave}
+              value={formValues[chave]}
+              onChange={handleInputChange}
+            />
+          </div>
+        ))}
       <div className='botoes'>
-      <button onClick={salvar} style={{backgroundColor: 'var(--light-blue)'}}>Salvar</button>
-      <button style={{backgroundColor: '#d64e4e'}} onClick={()=>setEditarDisplay('none')} >Sair</button>
+        <button onClick={salvar} style={{backgroundColor: 'var(--light-blue)'}}>Salvar</button>
+        <button style={{backgroundColor: '#d64e4e'}} onClick={()=>setEditarDisplay('none')} >Sair</button>
       </div>
     </div>
 
@@ -331,8 +303,6 @@ function recarregarPagina() {
       <tbody>
         {lista.map((item, index) => (
           <tr key={index}>
-
-
             {
                !isUsuario ? (
                 Object.keys(item).map((key) => (
@@ -344,7 +314,7 @@ function recarregarPagina() {
                   <td scope="row">{item.id}</td>
                   <td>{item.nomeCompleto}</td>
                   <td>{item.email}</td>
-                  <td>{item.telefone}</td>
+                  <td>{formatarTelefone(item.telefone)}</td>
                 </>
               )
             }
@@ -386,7 +356,7 @@ function recarregarPagina() {
         ))}
       </tbody> 
     </table>
-       <button className='adicionar' onClick={criarItem} style={{backgroundColor: 'var(--light-blue)'}}>Adicionar item</button>
+       <button style={{display: isUsuario? 'none' : 'flex', backgroundColor: 'var(--light-blue)'}} className='adicionar' onClick={criarItem} >Adicionar item</button>
        </>
   );
 }

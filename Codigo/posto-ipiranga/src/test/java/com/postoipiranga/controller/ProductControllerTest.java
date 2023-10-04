@@ -55,7 +55,6 @@ public class ProductControllerTest {
         product.setNome("Maquina");
         product.setPreco(1500L);
         product.setMarca("Britania");
-        product.setQuantidade(1L);
         product.setUnidadeMedida("Kg");
 
         final List<ProductModel> products = new ArrayList<>();

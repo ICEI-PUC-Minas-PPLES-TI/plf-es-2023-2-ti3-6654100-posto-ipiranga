@@ -48,6 +48,34 @@ public class ProductController {
         }
     }
 
+    @GetMapping("detalhado/{id}")
+    public ResponseEntity<?> getProductByIdDetalhado(@PathVariable @Valid final long id) {
+
+        try {
+            if(productService.existsById(id)){
+                final var response = productService.findProductDetalhado(id);
+                return ResponseEntity.ok(response);
+            }else{
+                final var message = new MessageDTO("Product with ID " + id + " not found.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("detalhados")
+    public ResponseEntity<?> getProductsByIdDetalhados() {
+
+        try {
+            final var response = productService.findProductsDetalhados();
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody @Valid final ProductModel productModel) {
 
