@@ -25,9 +25,7 @@ public class EstoqueModel {
     @JoinColumn(name="produto_id", nullable=false)
     private ProductModel productId;
     @Column(length = 150, nullable = false)
-    private Date dataTransacao;
-    @Column(nullable = false)
-    private Boolean venda;
+    private Date dataAtualizacao;
     @Column(nullable = false)
     private Long quantidade;
 }

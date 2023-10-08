@@ -1,5 +1,7 @@
 package com.postoipiranga.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -10,15 +12,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.controller.dto.MessageDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.service.EstoqueService;
+import com.postoipiranga.service.ProductService;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -28,6 +33,7 @@ public class EstoqueController {
 
     public EstoqueController(EstoqueService estoqueService) {
         this.estoqueService = estoqueService;
+        
     }
 
     @GetMapping
@@ -59,10 +65,10 @@ public class EstoqueController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody @Valid final EstoqueModel estoqueModel) {
-
+    public ResponseEntity<?> createProduct(@RequestBody @Valid final EstoqueDTO estoqueDTO) {
+        
         try {
-            final var response = estoqueService.save(estoqueModel);
+            final var response = estoqueService.save(estoqueDTO);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -71,18 +77,18 @@ public class EstoqueController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable final long id, @RequestBody @Valid final EstoqueModel estoqueModel) {
+    public ResponseEntity<?> updateProduct(@PathVariable final long id, @RequestBody @Valid final EstoqueDTO estoqueDTO) {
 
         try {
 
             if (estoqueService.existsById(id)) {
-                estoqueModel.setId(id);
+                estoqueDTO.setId(id);
             } else {
                 final var message = new MessageDTO("Estoque with ID " + id + " not found.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
             }
 
-            final var response = estoqueService.save(estoqueModel);
+            final var response = estoqueService.save(estoqueDTO);
 
             return ResponseEntity.ok(response);
 

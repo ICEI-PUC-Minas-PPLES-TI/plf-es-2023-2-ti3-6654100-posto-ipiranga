@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.postoipiranga.bean.ProductBean;
+import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.repository.EstoqueRepository;
@@ -20,13 +21,23 @@ import jakarta.transaction.Transactional;
 public class EstoqueService {
 
     private final EstoqueRepository estoqueRepository;
+    private final ProductService productService;
 
-    public EstoqueService(EstoqueRepository estoqueRepository) {
+    public EstoqueService(EstoqueRepository estoqueRepository, ProductService productService) {
         this.estoqueRepository = estoqueRepository;
+        this.productService = productService;
     }
 
     @Transactional
-    public EstoqueModel save(EstoqueModel estoqueModel) {
+    public EstoqueModel save(EstoqueDTO estoqueDTO) throws Exception {
+        Optional<ProductModel> producEstoque = productService.findById(estoqueDTO.getProductId());
+        if(!producEstoque.isPresent()){
+            throw new Exception("Nao possui esse produto");
+        }
+        EstoqueModel estoqueModel = new EstoqueModel();
+        estoqueModel.setDataAtualizacao(estoqueDTO.getDataAtualizacao());
+        estoqueModel.setProductId(producEstoque.get());
+        estoqueModel.setQuantidade(estoqueDTO.getQuantidade());
         return estoqueRepository.save(estoqueModel);
     }
 
