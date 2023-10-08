@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class ProductBean {
     private Long id;
-    private BigDecimal quantidade;
+    private Long quantidade;
     private String nome;
     private String marca;
     private String unidadeMedida;
@@ -19,7 +19,7 @@ public class ProductBean {
 
     public ProductBean(Object[] result){
         this.id = (Long) result[0];
-        this.quantidade = (BigDecimal) result[1];
+        this.quantidade = (Long) result[1];
         this.nome = (String) result[2];
         this.marca = (String) result[3];
         this.preco = (Double) result[4];

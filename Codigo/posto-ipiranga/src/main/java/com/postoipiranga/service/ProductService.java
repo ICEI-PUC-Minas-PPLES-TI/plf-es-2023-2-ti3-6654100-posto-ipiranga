@@ -55,12 +55,11 @@ public class ProductService {
 
     public ProductBean findProductDetalhado(Long id){
         StringBuilder queryBuilder = new StringBuilder("SELECT e.produto_id as id, ");
-        queryBuilder.append("SUM(CASE WHEN e.venda = false THEN e.quantidade ELSE -e.quantidade END) AS quantidade, ");
+        queryBuilder.append("e.quantidade, ");
         queryBuilder.append("p.nome, p.marca, p.preco, p.unidade_medida ");
         queryBuilder.append("FROM estoque as e, produto as p ");
         queryBuilder.append("WHERE e.produto_id = p.id ");
         queryBuilder.append("AND p.id = :id ");
-        queryBuilder.append("GROUP BY e.produto_id, p.nome, p.marca, p.preco, p.unidade_medida");
         
         Query query = emf.createNativeQuery(queryBuilder.toString());
         query.setParameter("id", id);
@@ -73,11 +72,10 @@ public class ProductService {
 
     public List<ProductBean> findProductsDetalhados(){
         StringBuilder queryBuilder = new StringBuilder("SELECT e.produto_id as id, ");
-        queryBuilder.append("SUM(CASE WHEN e.venda = false THEN e.quantidade ELSE -e.quantidade END) AS quantidade, ");
+        queryBuilder.append("e.quantidade, ");
         queryBuilder.append("p.nome, p.marca, p.preco, p.unidade_medida ");
         queryBuilder.append("FROM estoque as e, produto as p ");
         queryBuilder.append("WHERE e.produto_id = p.id ");
-        queryBuilder.append("GROUP BY e.produto_id, p.nome, p.marca, p.preco, p.unidade_medida");
         
         Query query = emf.createNativeQuery(queryBuilder.toString());
         query.unwrap(NativeQuery.class).addScalar("id").addScalar("quantidade")
