@@ -1,7 +1,9 @@
 package com.postoipiranga.service;
 
 import com.postoipiranga.bean.ProductBean;
+import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
+import com.postoipiranga.repository.EstoqueRepository;
 import com.postoipiranga.repository.ProductRepository;
 
 import jakarta.persistence.EntityManager;
@@ -13,6 +15,8 @@ import jakarta.transaction.Transactional;
 import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,15 +27,28 @@ public class ProductService {
     private final ProductRepository productRepository;
     @PersistenceContext
     private EntityManager emf;
+    private final EstoqueRepository estoqueRepository;
 
-    public ProductService(ProductRepository productRepository, EntityManager emf) {
+    public ProductService(ProductRepository productRepository, EntityManager emf, EstoqueRepository estoqueRepository) {
         this.productRepository = productRepository;
         this.emf = emf;
+        this.estoqueRepository = estoqueRepository;
     }
 
     @Transactional
     public ProductModel save(ProductModel productModel) {
-        return productRepository.save(productModel);
+        ProductModel productModelFinal = productRepository.save(productModel);
+
+
+        EstoqueModel estoqueModel = new EstoqueModel();
+        estoqueModel.setProductId(productModelFinal);
+        estoqueModel.setQuantidade((long) 0);
+        Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
+        Date date = new Date(dataDeHoje.getTime());
+        estoqueModel.setDataAtualizacao(date);
+        estoqueRepository.save(estoqueModel);
+
+        return productModelFinal;
     }
 
     public List<ProductModel> findAll() {
@@ -47,8 +64,15 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<ProductModel> delete(Long id) {
+    public Optional<ProductModel> delete(Long id) throws Exception {
         Optional<ProductModel> productModelDeletado = productRepository.findById(id);
+        if(!productModelDeletado.isPresent()){
+            throw new Exception("Nao existe produto !!");
+        }
+        
+        Optional<EstoqueModel> estoqueModelDeletado = estoqueRepository.findByProductId(productModelDeletado.get());
+        estoqueRepository.delete(estoqueModelDeletado.get());
+
         productRepository.deleteById(id);
         return productModelDeletado;
     }

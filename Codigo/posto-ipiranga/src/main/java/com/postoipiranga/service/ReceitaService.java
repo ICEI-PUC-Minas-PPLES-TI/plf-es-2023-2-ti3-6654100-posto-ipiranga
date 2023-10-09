@@ -32,7 +32,7 @@ public class ReceitaService {
         if(!producReceita.isPresent()){
             throw new Exception("Nao possui esse produto");
         }
-        modificarEstoque(receitaDTO,producReceita.get());
+        modificarEstoqueMais(receitaDTO,producReceita.get());
 
         ReceitaModel receitaModel =  new ReceitaModel();
         receitaModel.setDataTransacao(receitaDTO.getDataTransacao());
@@ -45,7 +45,7 @@ public class ReceitaService {
         
     }
 
-    public void modificarEstoque(ReceitaDTO receitaDTO, ProductModel productModel){
+    public void modificarEstoqueMais(ReceitaDTO receitaDTO, ProductModel productModel){
         Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
         if(!estoqueReceita.isPresent()){
             EstoqueModel estoqueModel = new EstoqueModel();
@@ -75,8 +75,27 @@ public class ReceitaService {
     @Transactional
     public Optional<ReceitaModel> delete(Long id) {
         Optional<ReceitaModel> receitaModelDeletado = receitaRepository.findById(id);
+        if(!receitaModelDeletado.isPresent()){
+            throw new Error("Nao existe receita !");
+        }
+        modificarEstoqueMenos(receitaModelDeletado.get(), receitaModelDeletado.get().getProductId());
         receitaRepository.deleteById(id);
         return receitaModelDeletado;
+    }
+
+    public void modificarEstoqueMenos(ReceitaModel receitaModelDeletado, ProductModel productModel){
+        Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
+        if(!estoqueReceita.isPresent()){
+            EstoqueModel estoqueModel = new EstoqueModel();
+            estoqueModel.setProductId(productModel);
+            estoqueModel.setQuantidade((long) 0);
+            estoqueModel.setDataAtualizacao(receitaModelDeletado.getDataTransacao());
+            estoqueRepository.save(estoqueModel);
+        } else {
+            estoqueReceita.get().setDataAtualizacao(receitaModelDeletado.getDataTransacao());
+            estoqueReceita.get().setQuantidade(estoqueReceita.get().getQuantidade() - receitaModelDeletado.getQuantidade());
+            estoqueRepository.save(estoqueReceita.get());
+        }
     }
 
 }
