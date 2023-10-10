@@ -3,11 +3,12 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   datasource:
+    platform: tis_prod
     url: jdbc:postgresql://localhost:5432/tis_prod
-    username: tis_prod
-    password: 12345
+    username: postgres
+    password: pablgui
   database:
     driverClassName: org.postgresql.Driver
 server:
@@ -20,7 +21,23 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/tis_prod
+    username: tis_prod
+    password: 12345
+  database:
+    driverClassName: org.postgresql.Driver
+server:
+  port: 7000
+---
+spring:
+  config.activate.on-profile: deploy
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:postgresql://silly.db.elephantsql.com:5432/moljttsr
     username: moljttsr

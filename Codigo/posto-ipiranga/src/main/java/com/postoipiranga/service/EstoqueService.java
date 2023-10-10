@@ -1,32 +1,39 @@
 package com.postoipiranga.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
-import com.postoipiranga.bean.ProductBean;
+import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.repository.EstoqueRepository;
-import com.postoipiranga.repository.ProductRepository;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EstoqueService {
 
     private final EstoqueRepository estoqueRepository;
+    private final ProductService productService;
 
-    public EstoqueService(EstoqueRepository estoqueRepository) {
+    public EstoqueService(EstoqueRepository estoqueRepository, ProductService productService) {
         this.estoqueRepository = estoqueRepository;
+        this.productService = productService;
     }
 
     @Transactional
-    public EstoqueModel save(EstoqueModel estoqueModel) {
+    public EstoqueModel save(EstoqueDTO estoqueDTO) throws Exception {
+        Optional<ProductModel> producEstoque = productService.findById(estoqueDTO.getProductId());
+        if (producEstoque.isEmpty()) {
+            throw new Exception("Nao possui esse produto");
+        }
+        EstoqueModel estoqueModel = new EstoqueModel();
+        estoqueModel.setDataAtualizacao(Date.valueOf(LocalDate.now()));
+        estoqueModel.setProductId(producEstoque.get());
+        estoqueModel.setProductName(producEstoque.get().getNome());
+        estoqueModel.setQuantidade(estoqueDTO.getQuantidade());
         return estoqueRepository.save(estoqueModel);
     }
 

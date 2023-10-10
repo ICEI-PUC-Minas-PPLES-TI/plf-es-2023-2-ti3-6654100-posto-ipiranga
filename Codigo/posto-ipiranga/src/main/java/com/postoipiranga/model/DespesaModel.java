@@ -14,20 +14,22 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Estoque")
+@Table(name = "DESPESA")
 @Getter
 @Setter
-public class EstoqueModel {
+public class DespesaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name="produto_id", nullable=false)
     private ProductModel productId;
-    @Column(name = "nome_produto")
-    private String productName;
     @Column(length = 150, nullable = false)
-    private Date dataAtualizacao;
+    private Date dataTransacao;
+    @Column(nullable = false)
+    private double precoUnidade;
     @Column(nullable = false)
     private Long quantidade;
+    @Column(nullable = false)
+    private double precoTotal;
 }
