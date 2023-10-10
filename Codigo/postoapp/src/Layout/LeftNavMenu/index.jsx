@@ -93,10 +93,18 @@ const LeftNavMenu = () => {
 
             <ItemList
               icone={<FontAwesomeIcon icon={faList} style={{ color: 'var(--dark-blue)' }} />}
-              categoriaNome={'Controle de Estoque'}
+              categoriaNome={'Controle de Produtos'}
               categoriaPath={'listaprodutos'}
               selecionado={selectedItem === 'listaprodutos'} 
               clicado={() => alterarSelecionado('listaprodutos')} 
+            />
+
+            <ItemList
+              icone={<FontAwesomeIcon icon={faList} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Controle de Estoque'}
+              categoriaPath={'listaestoque'}
+              selecionado={selectedItem === 'listaestoque'} 
+              clicado={() => alterarSelecionado('listaestoque')} 
             />
             </div>
         </nav>

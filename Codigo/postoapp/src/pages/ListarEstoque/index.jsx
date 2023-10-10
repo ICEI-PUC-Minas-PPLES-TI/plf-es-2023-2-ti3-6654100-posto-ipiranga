@@ -1,10 +1,10 @@
-import './ListarProdutos.scss'
+import './ListarEstoque.scss'
 import BarraPesquisa from '../../Components/public/BarraPesquisa';
 import Tabela from '../../Components/public/Tabela';
 import LeftNavMenu from '../../Layout/LeftNavMenu';
 
 
-const ListarProdutos = () => {
+const ListarEstoque = () => {
     //LISTA DE TITULOS DAS COLUNAS
     const listaThProdutos = ['ID', 'NOME', 'MARCA', 'UNIDADE DE MEDIDA', 'PREÇO', 'OPÇÕES']
 
@@ -22,7 +22,7 @@ const ListarProdutos = () => {
                 </div>
                 <div className='topbar col-md-9'>
         
-                    <h1 id="titulo">Controle de Produtos</h1>
+                    <h1 id="titulo">Controle de Estoque</h1>
                     <BarraPesquisa />
 
                     <Tabela 
@@ -40,4 +40,4 @@ const ListarProdutos = () => {
     )
 }
 
-export default ListarProdutos
+export default ListarEstoque
