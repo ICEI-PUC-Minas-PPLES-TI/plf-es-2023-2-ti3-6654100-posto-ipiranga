@@ -24,6 +24,8 @@ public class EstoqueModel {
     @ManyToOne
     @JoinColumn(name="produto_id", nullable=false)
     private ProductModel productId;
+    @Column(name = "nome_produto")
+    private String productName;
     @Column(length = 150, nullable = false)
     private Date dataAtualizacao;
     @Column(nullable = false)

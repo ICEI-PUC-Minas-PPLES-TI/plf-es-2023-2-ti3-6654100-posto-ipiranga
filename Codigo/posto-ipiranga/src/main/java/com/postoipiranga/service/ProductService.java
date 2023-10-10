@@ -5,21 +5,16 @@ import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.repository.EstoqueRepository;
 import com.postoipiranga.repository.ProductRepository;
-
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
-
 import org.hibernate.query.NativeQuery;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -39,13 +34,11 @@ public class ProductService {
     public ProductModel save(ProductModel productModel) {
         ProductModel productModelFinal = productRepository.save(productModel);
 
-
         EstoqueModel estoqueModel = new EstoqueModel();
         estoqueModel.setProductId(productModelFinal);
-        estoqueModel.setQuantidade((long) 0);
-        Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
-        Date date = new Date(dataDeHoje.getTime());
-        estoqueModel.setDataAtualizacao(date);
+        estoqueModel.setQuantidade(0L);
+        estoqueModel.setProductName(productModelFinal.getNome());
+        estoqueModel.setDataAtualizacao(Date.valueOf(LocalDate.now()));
         estoqueRepository.save(estoqueModel);
 
         return productModelFinal;
@@ -66,10 +59,10 @@ public class ProductService {
     @Transactional
     public Optional<ProductModel> delete(Long id) throws Exception {
         Optional<ProductModel> productModelDeletado = productRepository.findById(id);
-        if(!productModelDeletado.isPresent()){
+        if (productModelDeletado.isEmpty()) {
             throw new Exception("Nao existe produto !!");
         }
-        
+
         Optional<EstoqueModel> estoqueModelDeletado = estoqueRepository.findByProductId(productModelDeletado.get());
         estoqueRepository.delete(estoqueModelDeletado.get());
 
@@ -77,33 +70,33 @@ public class ProductService {
         return productModelDeletado;
     }
 
-    public ProductBean findProductDetalhado(Long id){
+    public ProductBean findProductDetalhado(Long id) {
         StringBuilder queryBuilder = new StringBuilder("SELECT e.produto_id as id, ");
         queryBuilder.append("e.quantidade, ");
         queryBuilder.append("p.nome, p.marca, p.preco, p.unidade_medida ");
         queryBuilder.append("FROM estoque as e, produto as p ");
         queryBuilder.append("WHERE e.produto_id = p.id ");
         queryBuilder.append("AND p.id = :id ");
-        
+
         Query query = emf.createNativeQuery(queryBuilder.toString());
         query.setParameter("id", id);
         query.unwrap(NativeQuery.class).addScalar("id").addScalar("quantidade")
-        .addScalar("nome").addScalar("marca").addScalar("preco").addScalar("unidade_medida");
+                .addScalar("nome").addScalar("marca").addScalar("preco").addScalar("unidade_medida");
         Object[] result = (Object[]) query.getSingleResult();
         ProductBean productBean = new ProductBean(result);
         return productBean;
     }
 
-    public List<ProductBean> findProductsDetalhados(){
+    public List<ProductBean> findProductsDetalhados() {
         StringBuilder queryBuilder = new StringBuilder("SELECT e.produto_id as id, ");
         queryBuilder.append("e.quantidade, ");
         queryBuilder.append("p.nome, p.marca, p.preco, p.unidade_medida ");
         queryBuilder.append("FROM estoque as e, produto as p ");
         queryBuilder.append("WHERE e.produto_id = p.id ");
-        
+
         Query query = emf.createNativeQuery(queryBuilder.toString());
         query.unwrap(NativeQuery.class).addScalar("id").addScalar("quantidade")
-        .addScalar("nome").addScalar("marca").addScalar("preco").addScalar("unidade_medida");
+                .addScalar("nome").addScalar("marca").addScalar("preco").addScalar("unidade_medida");
         List<Object[]> result = query.getResultList();
         List<ProductBean> listaProdutos = result.stream().map(i -> new ProductBean(i)).toList();
         return listaProdutos;

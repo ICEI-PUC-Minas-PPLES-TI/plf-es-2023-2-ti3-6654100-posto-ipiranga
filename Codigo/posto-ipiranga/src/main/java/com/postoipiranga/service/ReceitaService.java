@@ -1,19 +1,17 @@
 package com.postoipiranga.service;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
-import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.controller.dto.ReceitaDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.model.ReceitaModel;
 import com.postoipiranga.repository.EstoqueRepository;
 import com.postoipiranga.repository.ReceitaRepository;
-
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ReceitaService {
     private final ReceitaRepository receitaRepository;
@@ -29,12 +27,12 @@ public class ReceitaService {
     @Transactional
     public ReceitaModel save(ReceitaDTO receitaDTO) throws Exception {
         Optional<ProductModel> producReceita = productService.findById(receitaDTO.getProductId());
-        if(!producReceita.isPresent()){
+        if (producReceita.isEmpty()) {
             throw new Exception("Nao possui esse produto");
         }
-        modificarEstoqueMais(receitaDTO,producReceita.get());
+        modificarEstoqueMais(receitaDTO, producReceita.get());
 
-        ReceitaModel receitaModel =  new ReceitaModel();
+        ReceitaModel receitaModel = new ReceitaModel();
         receitaModel.setDataTransacao(receitaDTO.getDataTransacao());
         receitaModel.setProductId(producReceita.get());
         receitaModel.setQuantidade(receitaDTO.getQuantidade());
@@ -42,19 +40,19 @@ public class ReceitaService {
         receitaModel.setPrecoTotal(receitaDTO.getQuantidade() * producReceita.get().getPreco());
 
         return receitaRepository.save(receitaModel);
-        
+
     }
 
-    public void modificarEstoqueMais(ReceitaDTO receitaDTO, ProductModel productModel) throws Exception{
+    public void modificarEstoqueMais(ReceitaDTO receitaDTO, ProductModel productModel) throws Exception {
         Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
-        if(!estoqueReceita.isPresent()){
+        if (estoqueReceita.isEmpty()) {
             EstoqueModel estoqueModel = new EstoqueModel();
             estoqueModel.setProductId(productModel);
             estoqueModel.setQuantidade((long) 0);
             estoqueModel.setDataAtualizacao(receitaDTO.getDataTransacao());
             estoqueRepository.save(estoqueModel);
         } else {
-            if(estoqueReceita.get().getQuantidade() < receitaDTO.getQuantidade()){
+            if (estoqueReceita.get().getQuantidade() < receitaDTO.getQuantidade()) {
                 throw new Exception("Vendendo mais produtos do que disponivel !!");
             }
             estoqueReceita.get().setDataAtualizacao(receitaDTO.getDataTransacao());
@@ -78,7 +76,7 @@ public class ReceitaService {
     @Transactional
     public Optional<ReceitaModel> delete(Long id) {
         Optional<ReceitaModel> receitaModelDeletado = receitaRepository.findById(id);
-        if(!receitaModelDeletado.isPresent()){
+        if (receitaModelDeletado.isEmpty()) {
             throw new Error("Nao existe receita !");
         }
         modificarEstoqueMenos(receitaModelDeletado.get(), receitaModelDeletado.get().getProductId());
@@ -86,9 +84,9 @@ public class ReceitaService {
         return receitaModelDeletado;
     }
 
-    public void modificarEstoqueMenos(ReceitaModel receitaModelDeletado, ProductModel productModel){
+    public void modificarEstoqueMenos(ReceitaModel receitaModelDeletado, ProductModel productModel) {
         Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
-        if(!estoqueReceita.isPresent()){
+        if (estoqueReceita.isEmpty()) {
             EstoqueModel estoqueModel = new EstoqueModel();
             estoqueModel.setProductId(productModel);
             estoqueModel.setQuantidade(receitaModelDeletado.getQuantidade());

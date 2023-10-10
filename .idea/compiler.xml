@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="plf-es-2023-2-ti3-6654100-posto-ipiranga" />
         <module name="posto-ipiranga" />
       </profile>
     </annotationProcessing>
