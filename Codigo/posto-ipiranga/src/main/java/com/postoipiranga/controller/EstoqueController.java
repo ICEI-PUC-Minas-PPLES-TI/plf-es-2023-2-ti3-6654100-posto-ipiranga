@@ -1,28 +1,13 @@
 package com.postoipiranga.controller;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.controller.dto.MessageDTO;
-import com.postoipiranga.model.EstoqueModel;
-import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.service.EstoqueService;
-import com.postoipiranga.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @RestController
@@ -33,7 +18,7 @@ public class EstoqueController {
 
     public EstoqueController(EstoqueService estoqueService) {
         this.estoqueService = estoqueService;
-        
+
     }
 
     @GetMapping
@@ -52,10 +37,10 @@ public class EstoqueController {
     public ResponseEntity<?> getEstoqueById(@PathVariable @Valid final long id) {
 
         try {
-            if(estoqueService.existsById(id)){
+            if (estoqueService.existsById(id)) {
                 final var response = estoqueService.findById(id);
                 return ResponseEntity.ok(response);
-            }else{
+            } else {
                 final var message = new MessageDTO("Product with ID " + id + " not found.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
             }
@@ -66,7 +51,7 @@ public class EstoqueController {
 
     @PostMapping
     public ResponseEntity<?> createProduct(@RequestBody @Valid final EstoqueDTO estoqueDTO) {
-        
+
         try {
             final var response = estoqueService.save(estoqueDTO);
 
