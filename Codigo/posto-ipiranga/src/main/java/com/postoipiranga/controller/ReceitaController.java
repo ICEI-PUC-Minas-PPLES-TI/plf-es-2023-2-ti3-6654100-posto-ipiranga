@@ -1,5 +1,6 @@
 package com.postoipiranga.controller;
 
+import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.controller.dto.MessageDTO;
 import com.postoipiranga.controller.dto.ReceitaDTO;
 import com.postoipiranga.service.ReceitaService;
@@ -75,6 +76,27 @@ public class ReceitaController {
                 final var message = new MessageDTO("Estoque with ID " + id + " not found.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
             }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable final long id, @RequestBody @Valid final ReceitaDTO receitaDTO) {
+
+        try {
+
+            if (!receitaService.existsById(id)) {
+                final var message = new MessageDTO("Estoque with ID " + id + " not found.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            }
+
+            receitaDTO.setProductId(id);
+
+            final var response = receitaService.save(id, receitaDTO);
+
+            return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e);
         }

@@ -1,18 +1,17 @@
 package com.postoipiranga.service;
 
 import com.postoipiranga.controller.dto.ReceitaDTO;
-import com.postoipiranga.controller.dto.response.EstoqueResponseDTO;
 import com.postoipiranga.controller.dto.response.ReceitaResponseDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.model.ReceitaModel;
 import com.postoipiranga.repository.EstoqueRepository;
 import com.postoipiranga.repository.ReceitaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -50,6 +49,18 @@ public class ReceitaService {
 
     }
 
+    @Transactional
+    public ReceitaModel save(final long id, final ReceitaDTO receitaDTO) throws Exception {
+
+        final var receita = this.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Receita não encontrado"));
+
+        receita.setQuantidade(receitaDTO.getQuantidade());
+        receita.setDataTransacao(Date.valueOf(LocalDate.now()).toString());
+
+        return receitaRepository.save(receita);
+    }
+
     public void modificarEstoqueMais(ReceitaDTO receitaDTO, ProductModel productModel) throws Exception {
         Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
         if (estoqueReceita.isEmpty()) {
@@ -72,7 +83,7 @@ public class ReceitaService {
         return receitaRepository.findAll();
     }
 
-    public List<ReceitaResponseDTO> findReceitas(){
+    public List<ReceitaResponseDTO> findReceitas() {
         final var receitas = receitaRepository.findAll();
         final var receitaList = new ArrayList<ReceitaResponseDTO>();
 
