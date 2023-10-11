@@ -1,14 +1,17 @@
 package com.postoipiranga.service;
 
 import com.postoipiranga.controller.dto.EstoqueDTO;
+import com.postoipiranga.controller.dto.response.EstoqueResponseDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.repository.EstoqueRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,8 +40,23 @@ public class EstoqueService {
         return estoqueRepository.save(estoqueModel);
     }
 
-    public List<EstoqueModel> findAll() {
-        return estoqueRepository.findAll();
+    public List<EstoqueResponseDTO> findAll() {
+        final var estoque = estoqueRepository.findAll();
+        final var estoqueList = new ArrayList<EstoqueResponseDTO>();
+
+        if (!estoque.isEmpty()) {
+            for (EstoqueModel estoqueModel : estoque) {
+                final var estoqueDTO = new EstoqueResponseDTO();
+                estoqueDTO.setId(estoqueModel.getId());
+                estoqueDTO.setDataAtualizacao(estoqueModel.getDataAtualizacao().toLocalDate());
+                estoqueDTO.setNomeProduto(estoqueModel.getProductName());
+                estoqueDTO.setQuantidade(estoqueModel.getQuantidade());
+
+                estoqueList.add(estoqueDTO);
+            }
+        }
+
+        return estoqueList;
     }
 
     public boolean existsById(long id) {
@@ -52,7 +70,13 @@ public class EstoqueService {
     @Transactional
     public Optional<EstoqueModel> delete(Long id) {
         Optional<EstoqueModel> estoqueModelDeletado = estoqueRepository.findById(id);
-        estoqueRepository.deleteById(id);
+
+        estoqueModelDeletado
+                .ifPresent(estoqueModel
+                        -> estoqueModel.setQuantidade(0L));
+
+        estoqueRepository.save(estoqueModelDeletado.get());
+
         return estoqueModelDeletado;
     }
 
