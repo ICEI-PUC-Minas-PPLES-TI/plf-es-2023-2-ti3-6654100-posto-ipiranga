@@ -61,7 +61,7 @@ public class EstoqueService {
             for (EstoqueModel estoqueModel : estoque) {
                 final var estoqueDTO = new EstoqueResponseDTO();
                 estoqueDTO.setId(estoqueModel.getId());
-                estoqueDTO.setDataAtualizacao(dateFormat(LocalDate.parse(dateFormat(LocalDate.now()))));
+                estoqueDTO.setDataAtualizacao(dateFormat(LocalDate.parse(estoqueModel.getDataAtualizacao())));
                 estoqueDTO.setNomeProduto(estoqueModel.getProductName());
                 estoqueDTO.setQuantidade(estoqueModel.getQuantidade());
 
