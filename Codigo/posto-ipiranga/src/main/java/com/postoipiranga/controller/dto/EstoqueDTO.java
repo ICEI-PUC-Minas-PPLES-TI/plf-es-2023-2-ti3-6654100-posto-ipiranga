@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonIgnoreProperties
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EstoqueDTO {
 
     @JsonProperty("id")

@@ -5,8 +5,8 @@ import com.postoipiranga.controller.dto.response.EstoqueResponseDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.repository.EstoqueRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -42,17 +42,15 @@ public class EstoqueService {
     }
 
     @Transactional
-    public EstoqueModel save(final long id, EstoqueDTO estoqueDTO) throws Exception {
-        Optional<ProductModel> producEstoque = productService.findById(id);
-        if (producEstoque.isEmpty()) {
-            throw new Exception("Nao possui esse produto");
-        }
-        EstoqueModel estoqueModel = new EstoqueModel();
-        estoqueModel.setDataAtualizacao(Date.valueOf(LocalDate.now()));
-        estoqueModel.setProductId(producEstoque.get());
-        estoqueModel.setProductName(producEstoque.get().getNome());
-        estoqueModel.setQuantidade(estoqueDTO.getQuantidade());
-        return estoqueRepository.save(estoqueModel);
+    public EstoqueModel save(final long id, final EstoqueDTO estoqueDTO) throws Exception {
+
+        final var estoque = this.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Estoque não encontrado"));
+
+        estoque.setDataAtualizacao(Date.valueOf(LocalDate.now()));
+        estoque.setQuantidade(estoqueDTO.getQuantidade());
+
+        return estoqueRepository.save(estoque);
     }
 
     public List<EstoqueResponseDTO> findAll() {
@@ -95,7 +93,7 @@ public class EstoqueService {
         return estoqueModelDeletado;
     }
 
-    public String dateFormat(LocalDate date){
+    public String dateFormat(LocalDate date) {
 
         String pattern = "dd/MM/yyyy";
         final var formatter = DateTimeFormatter.ofPattern(pattern);
