@@ -102,6 +102,7 @@ const Formulario = () => {
         })
         localStorage.setItem('status', 'logado')
         localStorage.setItem('userID', responseData.id);
+        localStorage.setItem('perfil', responseData.perfil);
         localStorage.setItem('itemMenu', 'listausuarios');
         console.log(localStorage.getItem('userID'))
 

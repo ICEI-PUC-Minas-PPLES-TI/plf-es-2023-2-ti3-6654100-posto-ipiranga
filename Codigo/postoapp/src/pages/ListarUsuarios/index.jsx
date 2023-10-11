@@ -44,6 +44,7 @@ const ListarUsuarios = () => {
             listaTh={listaThUsuarios}
             listaDados={listaDadosUsuarios}
             isUsuario={true}
+            botaoAdicionar={false}
             />
             </div>
             </div>

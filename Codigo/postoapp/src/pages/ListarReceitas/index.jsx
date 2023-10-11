@@ -1,21 +1,24 @@
-import './ListarEstoque.scss'
+import './ListarReceitas.scss'
 import BarraPesquisa from '../../Components/public/BarraPesquisa';
 import Tabela from '../../Components/public/Tabela';
 import LeftNavMenu from '../../Layout/LeftNavMenu';
 
 
-const ListarEstoque = () => {
+const ListarProdutos = () => {
     //LISTA DE TITULOS DAS COLUNAS
-    const listaTh = ['ID','QUANTIDADE', 'NOME DO PRODUTO','DATA DE ATUALIZAÇÃO', 'OPÇÕES']
+    const listaTh = ['ID', 'QUANTIDADE VENDIDA', 'PRODUTO', 'DATA', 'VALOR UNITÁRIO', 'VALOR TOTAL', 'OPÇÕES']
 
     //LISTA DE TIPO DO INPUT DE CRIAR E EDITAR NA ORDEM
     const listaTypes = ['number'];
 
     //LISTA DE ATRIBUTOS COMO VEM DO BANCO
-    const listaDados = ['id', 'quantidade', 'nome_produto', 'data_atualizacao' ]
+    const listaDados = ['id', 'quantidade', 'nome', 'dataTransacao', 'preco', 'precoTotal' ]
 
-     //LISTA DE ATRIBUTOS ALTERADOS NO UPDATE
-     const listaUpdate = ['quantidade' , 'id']
+    //LISTA DE ATRIBUTOS ALTERADOS NO UPDATE
+    const listaUpdate = ['quantidade','id']
+
+    const listaCreate = ['quantidade', 'productId']
+    
 
     return(
         <main className="container-fluid">
@@ -25,17 +28,18 @@ const ListarEstoque = () => {
                 </div>
                 <div className='topbar col-md-9'>
         
-                    <h1 id="titulo">Controle de Estoque</h1>
+                    <h1 id="titulo">Controle de Receitas</h1>
                     <BarraPesquisa />
 
                     <Tabela 
-                    url={'http://localhost:7000/estoque'}
+                    url={'http://localhost:7000/receita'}
                     listaTh={listaTh}
                     listaDados={listaDados}
                     listaTypes={listaTypes}
-                    tipo={'estoque'}
+                    tipo={'receitas'}
                     listaUpdate={listaUpdate}
-                    botaoAdicionar={false}
+                    botaoAdicionar={true}
+                    listaCreate={listaCreate}
                     />
                 </div>
             </div>
@@ -45,4 +49,4 @@ const ListarEstoque = () => {
     )
 }
 
-export default ListarEstoque
+export default ListarProdutos

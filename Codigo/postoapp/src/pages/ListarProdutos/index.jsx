@@ -14,6 +14,13 @@ const ListarProdutos = () => {
     //LISTA DE ATRIBUTOS COMO VEM DO BANCO
     const listaDadosProdutos = ['id', 'nome', 'marca', 'unidadeMedida','preco' ]
 
+    //LISTA DE ATRIBUTOS ALTERADOS NO UPDATE
+    const listaUpdate = ['nome', 'marca', 'unidadeMedida', 'preco']
+
+    //LISTA DE ATRIBUTOS CRIADOS NO CREATE
+    const listaCreate = ['nome','marca', 'unidadeMedida', 'preco']
+    
+
     return(
         <main className="container-fluid">
             <div className='row'  id="listausuarios">
@@ -31,6 +38,9 @@ const ListarProdutos = () => {
                     listaDados={listaDadosProdutos}
                     listaTypes={listaTypes}
                     tipo={'produtos'}
+                    listaUpdate={listaUpdate}
+                    botaoAdicionar={true}
+                    listaCreate={listaCreate}
                     />
                 </div>
             </div>

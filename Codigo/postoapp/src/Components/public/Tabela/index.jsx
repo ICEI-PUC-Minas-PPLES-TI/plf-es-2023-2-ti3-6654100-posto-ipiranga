@@ -4,12 +4,12 @@ import Swal from 'sweetalert2';
 import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Tabela = ({url, selectAtivo, checkAtivo, listaTh, listaDados, listaTypes, isUsuario, tipo }) => {
+const Tabela = ({url, selectAtivo, checkAtivo, listaTh, listaDados, listaTypes, isUsuario, tipo, listaUpdate, botaoAdicionar, listaCreate}) => {
 const [lista, setLista] = useState([]);
 
 const [editarDisplay, setEditarDisplay] = useState('none')
 const [formValues, setFormValues] = useState({});
-const dadosInput = Object.keys(formValues).filter((chave) => chave !== "id");
+const dadosInput = Object.keys(formValues).filter((chave) => chave !== "id" && chave !== "data_atualizacao" && chave !== "nome_produto");
 const[titulo, setTitulo] = useState('')
 
 const deleteItem = (e) => {
@@ -55,13 +55,14 @@ const deleteItem = (e) => {
 const editarItem = (item) => {
   setEditarDisplay('flex');
   const formValues = {};
-
+  
   for (const chave in item) {
-    if (item.hasOwnProperty(chave)) {
+    console.log(chave)
+    if (item.hasOwnProperty(chave) && listaUpdate.includes(chave)) {
+      console.log(chave)
       formValues[chave] = item[chave];
     }
   }
-
 
   setFormValues(formValues);
   setTitulo('Editar');
@@ -82,7 +83,7 @@ function criarFormValues(listaCampos) {
 
 const criarItem = () => {
   setEditarDisplay('flex');
-  setFormValues(criarFormValues(listaDados))
+  setFormValues(criarFormValues(listaCreate))
   setTitulo('Criar')
 }
 
@@ -94,7 +95,9 @@ const handleInputChange = (event) => {
   });
 };
 
+
 const salvar = () => {
+  console.log(formValues.id)
 
   if(!formValues.id) {
     fetch(`${url}`, {
@@ -125,6 +128,7 @@ const salvar = () => {
   }
 
   else{
+
   fetch(`${url}/${formValues.id}`, {
     method: 'PUT',
     headers: {
@@ -172,7 +176,7 @@ function recarregarPagina() {
         }
 
         const responseData = await response.json();
-
+        console.log(responseData)
         const resposta = responseData.map((item) => {
           const obj = {};
           listaDados.forEach((prop, index) => {
@@ -277,7 +281,7 @@ function recarregarPagina() {
       <h1>{titulo} {tipo}</h1>
               {dadosInput.map((chave, index) => (
           <div className='textfield-modal' key={index}>
-            <label className='label-modal'>{listaTh[index+1]}</label>
+            <label className='label-modal'>{listaTh[index + 1]}</label>
             <input
               className='input-modal'
               type={listaTypes[index]}
@@ -348,7 +352,8 @@ function recarregarPagina() {
                 onChange={(e) => handlePerfilChange(index, e.target.value)}
               >
                 <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                <option value="CONSULTA">CONSULTA</option>
+                <option value="USUARIO">USUARIO</option>
+                <option value="GERENTE">GERENTE</option>
               </select>
             </td>
 
@@ -356,7 +361,7 @@ function recarregarPagina() {
         ))}
       </tbody> 
     </table>
-       <button style={{display: isUsuario? 'none' : 'flex', backgroundColor: 'var(--light-blue)'}} className='adicionar' onClick={criarItem} >Adicionar item</button>
+       <button style={{display: botaoAdicionar? 'flex' : 'none', backgroundColor: 'var(--light-blue)'}} className='adicionar' onClick={criarItem} >Adicionar item</button>
        </>
   );
 }
