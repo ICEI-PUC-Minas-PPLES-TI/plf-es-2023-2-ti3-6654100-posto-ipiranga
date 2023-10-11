@@ -41,6 +41,20 @@ public class EstoqueService {
         return estoqueRepository.save(estoqueModel);
     }
 
+    @Transactional
+    public EstoqueModel save(final long id, EstoqueDTO estoqueDTO) throws Exception {
+        Optional<ProductModel> producEstoque = productService.findById(id);
+        if (producEstoque.isEmpty()) {
+            throw new Exception("Nao possui esse produto");
+        }
+        EstoqueModel estoqueModel = new EstoqueModel();
+        estoqueModel.setDataAtualizacao(Date.valueOf(LocalDate.now()));
+        estoqueModel.setProductId(producEstoque.get());
+        estoqueModel.setProductName(producEstoque.get().getNome());
+        estoqueModel.setQuantidade(estoqueDTO.getQuantidade());
+        return estoqueRepository.save(estoqueModel);
+    }
+
     public List<EstoqueResponseDTO> findAll() {
         final var estoque = estoqueRepository.findAll();
         final var estoqueList = new ArrayList<EstoqueResponseDTO>();

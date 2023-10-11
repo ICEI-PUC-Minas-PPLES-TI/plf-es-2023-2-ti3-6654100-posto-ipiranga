@@ -73,7 +73,7 @@ public class EstoqueController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
             }
 
-            final var response = estoqueService.save(estoqueDTO);
+            final var response = estoqueService.save(id, estoqueDTO);
 
             return ResponseEntity.ok(response);
 
