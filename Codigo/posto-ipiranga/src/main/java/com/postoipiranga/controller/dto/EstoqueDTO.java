@@ -11,9 +11,6 @@ public class EstoqueDTO {
     @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("product_id")
-    private Long productId;
-
     @JsonProperty("quantidade")
     private Long quantidade;
 }

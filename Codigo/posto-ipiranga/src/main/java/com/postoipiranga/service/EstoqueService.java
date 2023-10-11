@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class EstoqueService {
             for (EstoqueModel estoqueModel : estoque) {
                 final var estoqueDTO = new EstoqueResponseDTO();
                 estoqueDTO.setId(estoqueModel.getId());
-                estoqueDTO.setDataAtualizacao(estoqueModel.getDataAtualizacao().toLocalDate());
+                estoqueDTO.setDataAtualizacao(dateFormat(estoqueModel.getDataAtualizacao().toLocalDate()));
                 estoqueDTO.setNomeProduto(estoqueModel.getProductName());
                 estoqueDTO.setQuantidade(estoqueModel.getQuantidade());
 
@@ -80,4 +81,11 @@ public class EstoqueService {
         return estoqueModelDeletado;
     }
 
+    public String dateFormat(LocalDate date){
+
+        String pattern = "dd/MM/yyyy";
+        final var formatter = DateTimeFormatter.ofPattern(pattern);
+
+        return date.format(formatter);
+    }
 }

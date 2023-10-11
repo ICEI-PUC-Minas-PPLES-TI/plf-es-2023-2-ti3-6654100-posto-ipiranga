@@ -3,7 +3,7 @@ package com.postoipiranga.controller.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class EstoqueResponseDTO {
@@ -11,7 +11,7 @@ public class EstoqueResponseDTO {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("data_atualizacao")
-    private LocalDate dataAtualizacao;
+    private String dataAtualizacao;
 
     @JsonProperty("nome_produto")
     private String nomeProduto;
