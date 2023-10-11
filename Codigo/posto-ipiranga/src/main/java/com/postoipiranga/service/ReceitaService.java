@@ -44,11 +44,11 @@ public class ReceitaService {
     }
 
     public void modificarEstoqueMais(ReceitaDTO receitaDTO, ProductModel productModel) throws Exception {
-        Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
+        Optional<EstoqueModel> estoqueReceita = estoqueRepository.findById(productModel.getId());
         if (estoqueReceita.isEmpty()) {
             EstoqueModel estoqueModel = new EstoqueModel();
             estoqueModel.setProductId(productModel);
-            estoqueModel.setQuantidade((long) 0);
+            estoqueModel.setQuantidade(0L);
             estoqueModel.setDataAtualizacao(receitaDTO.getDataTransacao());
             estoqueRepository.save(estoqueModel);
         } else {

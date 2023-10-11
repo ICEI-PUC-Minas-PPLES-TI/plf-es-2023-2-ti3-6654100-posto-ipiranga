@@ -26,7 +26,7 @@ public class UsuarioService {
         final var existePerfilAdm = usuarioRepository.existsByPerfil(usuarioModel.getPerfil());
 
         if(existePerfilAdm)
-            usuarioModel.setPerfil(PerfilCliente.CONSULTA);
+            usuarioModel.setPerfil(PerfilCliente.USUARIO);
 
         return usuarioRepository.save(usuarioModel);
     }
