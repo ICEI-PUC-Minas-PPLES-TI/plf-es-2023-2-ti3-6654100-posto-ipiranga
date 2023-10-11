@@ -13,5 +13,8 @@ import com.postoipiranga.model.ProductModel;
 @Repository
 public interface EstoqueRepository extends JpaRepository<EstoqueModel, Long> {
     Optional<EstoqueModel> findByProductId(ProductModel id);
+
+    Optional<EstoqueModel> findById(ProductModel id);
+
 }
 

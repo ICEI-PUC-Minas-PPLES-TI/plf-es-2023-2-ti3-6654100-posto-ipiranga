@@ -87,7 +87,7 @@ public class ReceitaController {
         try {
 
             if (!receitaService.existsById(id)) {
-                final var message = new MessageDTO("Estoque with ID " + id + " not found.");
+                final var message = new MessageDTO("Receita with ID " + id + " not found.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
             }
 

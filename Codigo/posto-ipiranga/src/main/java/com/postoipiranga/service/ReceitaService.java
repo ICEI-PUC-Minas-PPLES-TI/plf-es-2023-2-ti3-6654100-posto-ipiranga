@@ -55,6 +55,12 @@ public class ReceitaService {
         final var receita = this.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Receita não encontrado"));
 
+        final var estoque = estoqueRepository.findByProductId(receita.getProductId());
+
+        estoque.get().setQuantidade(receitaDTO.getQuantidade());
+
+        estoqueRepository.save(estoque.get());
+
         receita.setQuantidade(receitaDTO.getQuantidade());
         receita.setDataTransacao(Date.valueOf(LocalDate.now()).toString());
 
