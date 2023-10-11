@@ -49,11 +49,11 @@ public class DespesaService {
             EstoqueModel estoqueModel = new EstoqueModel();
             estoqueModel.setProductId(productModel);
             estoqueModel.setQuantidade(despesaDTO.getQuantidade());
-            estoqueModel.setDataAtualizacao(despesaDTO.getDataTransacao());
+            estoqueModel.setDataAtualizacao(String.valueOf(despesaDTO.getDataTransacao()));
             estoqueRepository.save(estoqueModel);
         } else {
 
-            estoqueReceita.get().setDataAtualizacao(despesaDTO.getDataTransacao());
+            estoqueReceita.get().setDataAtualizacao(String.valueOf(despesaDTO.getDataTransacao()));
             estoqueReceita.get().setQuantidade(estoqueReceita.get().getQuantidade() + despesaDTO.getQuantidade());
             estoqueRepository.save(estoqueReceita.get());
         }
@@ -88,13 +88,13 @@ public class DespesaService {
             EstoqueModel estoqueModel = new EstoqueModel();
             estoqueModel.setProductId(productModel);
             estoqueModel.setQuantidade((long) 0);
-            estoqueModel.setDataAtualizacao(despesaModelDeletado.getDataTransacao());
+            estoqueModel.setDataAtualizacao(String.valueOf(despesaModelDeletado.getDataTransacao()));
             estoqueRepository.save(estoqueModel);
         } else {
             if (estoqueReceita.get().getQuantidade() < despesaModelDeletado.getQuantidade()) {
                 throw new Exception("Revertendo despesa estoque irá ficar negativo !!");
             }
-            estoqueReceita.get().setDataAtualizacao(despesaModelDeletado.getDataTransacao());
+            estoqueReceita.get().setDataAtualizacao(String.valueOf(despesaModelDeletado.getDataTransacao()));
             estoqueReceita.get().setQuantidade(estoqueReceita.get().getQuantidade() - despesaModelDeletado.getQuantidade());
             estoqueRepository.save(estoqueReceita.get());
         }

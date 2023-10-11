@@ -34,7 +34,7 @@ public class EstoqueService {
             throw new Exception("Nao possui esse produto");
         }
         EstoqueModel estoqueModel = new EstoqueModel();
-        estoqueModel.setDataAtualizacao(Date.valueOf(LocalDate.now()));
+        estoqueModel.setDataAtualizacao(String.valueOf(Date.valueOf(LocalDate.now())));
         estoqueModel.setProductId(producEstoque.get());
         estoqueModel.setProductName(producEstoque.get().getNome());
         estoqueModel.setQuantidade(estoqueDTO.getQuantidade());
@@ -47,7 +47,7 @@ public class EstoqueService {
         final var estoque = this.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Estoque não encontrado"));
 
-        estoque.setDataAtualizacao(Date.valueOf(LocalDate.now()));
+        estoque.setDataAtualizacao(String.valueOf(Date.valueOf(LocalDate.now())));
         estoque.setQuantidade(estoqueDTO.getQuantidade());
 
         return estoqueRepository.save(estoque);
@@ -61,7 +61,7 @@ public class EstoqueService {
             for (EstoqueModel estoqueModel : estoque) {
                 final var estoqueDTO = new EstoqueResponseDTO();
                 estoqueDTO.setId(estoqueModel.getId());
-                estoqueDTO.setDataAtualizacao(dateFormat(estoqueModel.getDataAtualizacao().toLocalDate()));
+                estoqueDTO.setDataAtualizacao(dateFormat(LocalDate.parse(dateFormat(LocalDate.now()))));
                 estoqueDTO.setNomeProduto(estoqueModel.getProductName());
                 estoqueDTO.setQuantidade(estoqueModel.getQuantidade());
 

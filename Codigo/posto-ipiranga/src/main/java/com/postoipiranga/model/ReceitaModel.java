@@ -1,6 +1,7 @@
 package com.postoipiranga.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +26,7 @@ public class ReceitaModel {
     @JoinColumn(name="produto_id", nullable=false)
     private ProductModel productId;
     @Column(length = 150, nullable = false)
-    private Date dataTransacao;
+    private String dataTransacao;
     @Column(nullable = false)
     private Long quantidade;
     @Column(nullable = false)

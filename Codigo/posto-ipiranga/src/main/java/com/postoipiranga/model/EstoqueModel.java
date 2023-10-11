@@ -27,7 +27,7 @@ public class EstoqueModel {
     @Column(name = "nome_produto")
     private String productName;
     @Column(length = 150, nullable = false)
-    private Date dataAtualizacao;
+    private String dataAtualizacao;
     @Column(nullable = false)
     private Long quantidade;
 }

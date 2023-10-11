@@ -25,7 +25,7 @@ public class ReceitaController {
     public ResponseEntity<?> getAllReceita() {
 
         try {
-            final var response = receitaService.findAll();
+            final var response = receitaService.findReceitas();
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {

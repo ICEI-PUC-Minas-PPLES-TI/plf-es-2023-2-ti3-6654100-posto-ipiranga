@@ -38,7 +38,7 @@ public class ProductService {
         estoqueModel.setProductId(productModelFinal);
         estoqueModel.setQuantidade(0L);
         estoqueModel.setProductName(productModelFinal.getNome());
-        estoqueModel.setDataAtualizacao(Date.valueOf(LocalDate.now()));
+        estoqueModel.setDataAtualizacao(String.valueOf(Date.valueOf(LocalDate.now())));
         estoqueRepository.save(estoqueModel);
 
         return productModelFinal;

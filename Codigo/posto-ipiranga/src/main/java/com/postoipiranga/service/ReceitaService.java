@@ -1,6 +1,8 @@
 package com.postoipiranga.service;
 
 import com.postoipiranga.controller.dto.ReceitaDTO;
+import com.postoipiranga.controller.dto.response.EstoqueResponseDTO;
+import com.postoipiranga.controller.dto.response.ReceitaResponseDTO;
 import com.postoipiranga.model.EstoqueModel;
 import com.postoipiranga.model.ProductModel;
 import com.postoipiranga.model.ReceitaModel;
@@ -9,6 +11,11 @@ import com.postoipiranga.repository.ReceitaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +40,7 @@ public class ReceitaService {
         modificarEstoqueMais(receitaDTO, producReceita.get());
 
         ReceitaModel receitaModel = new ReceitaModel();
-        receitaModel.setDataTransacao(receitaDTO.getDataTransacao());
+        receitaModel.setDataTransacao(Date.valueOf(LocalDate.now()).toString());
         receitaModel.setProductId(producReceita.get());
         receitaModel.setQuantidade(receitaDTO.getQuantidade());
         receitaModel.setPrecoTotal(producReceita.get().getPreco());
@@ -44,18 +51,18 @@ public class ReceitaService {
     }
 
     public void modificarEstoqueMais(ReceitaDTO receitaDTO, ProductModel productModel) throws Exception {
-        Optional<EstoqueModel> estoqueReceita = estoqueRepository.findById(productModel.getId());
+        Optional<EstoqueModel> estoqueReceita = estoqueRepository.findByProductId(productModel);
         if (estoqueReceita.isEmpty()) {
             EstoqueModel estoqueModel = new EstoqueModel();
             estoqueModel.setProductId(productModel);
             estoqueModel.setQuantidade(0L);
-            estoqueModel.setDataAtualizacao(receitaDTO.getDataTransacao());
+            estoqueModel.setDataAtualizacao(dateFormat(LocalDate.now()));
             estoqueRepository.save(estoqueModel);
         } else {
             if (estoqueReceita.get().getQuantidade() < receitaDTO.getQuantidade()) {
                 throw new Exception("Vendendo mais produtos do que disponivel !!");
             }
-            estoqueReceita.get().setDataAtualizacao(receitaDTO.getDataTransacao());
+            estoqueReceita.get().setDataAtualizacao(dateFormat(LocalDate.now()));
             estoqueReceita.get().setQuantidade(estoqueReceita.get().getQuantidade() - receitaDTO.getQuantidade());
             estoqueRepository.save(estoqueReceita.get());
         }
@@ -63,6 +70,27 @@ public class ReceitaService {
 
     public List<ReceitaModel> findAll() {
         return receitaRepository.findAll();
+    }
+
+    public List<ReceitaResponseDTO> findReceitas(){
+        final var receitas = receitaRepository.findAll();
+        final var receitaList = new ArrayList<ReceitaResponseDTO>();
+
+        if (!receitas.isEmpty()) {
+            for (ReceitaModel receitaModel : receitas) {
+                final var receitaDTO = new ReceitaResponseDTO();
+                receitaDTO.setId(receitaModel.getId());
+                receitaDTO.setDataTransacao(dateFormat(LocalDate.parse(receitaModel.getDataTransacao())));
+                receitaDTO.setNome(receitaModel.getProductId().getNome());
+                receitaDTO.setQuantidade(receitaModel.getQuantidade());
+                receitaDTO.setPreco(receitaModel.getProductId().getPreco());
+                receitaDTO.setPrecoTotal(receitaModel.getPrecoTotal());
+
+                receitaList.add(receitaDTO);
+            }
+        }
+
+        return receitaList;
     }
 
     public boolean existsById(long id) {
@@ -99,4 +127,11 @@ public class ReceitaService {
         }
     }
 
+    public String dateFormat(LocalDate date) {
+
+        String pattern = "dd/MM/yyyy";
+        final var formatter = DateTimeFormatter.ofPattern(pattern);
+
+        return date.format(formatter);
+    }
 }
