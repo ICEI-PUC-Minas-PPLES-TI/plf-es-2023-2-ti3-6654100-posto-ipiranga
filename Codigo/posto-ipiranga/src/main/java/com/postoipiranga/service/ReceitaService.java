@@ -57,7 +57,11 @@ public class ReceitaService {
 
         final var estoque = estoqueRepository.findByProductId(receita.getProductId());
 
-        estoque.get().setQuantidade(receitaDTO.getQuantidade());
+        if(receitaDTO.getQuantidade() > estoque.get().getQuantidade()){
+            throw new Exception("A quantidade de produtos vendidos não pode ser maior que o estoque");
+        }
+
+        estoque.get().setQuantidade(estoque.get().getQuantidade() - receitaDTO.getQuantidade());
 
         estoqueRepository.save(estoque.get());
 

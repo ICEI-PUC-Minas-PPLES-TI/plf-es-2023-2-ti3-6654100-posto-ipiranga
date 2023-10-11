@@ -82,7 +82,7 @@ public class ReceitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable final long id, @RequestBody @Valid final ReceitaDTO receitaDTO) {
+    public ResponseEntity<?> updateReceita(@PathVariable final long id, @RequestBody @Valid final ReceitaDTO receitaDTO) {
 
         try {
 
