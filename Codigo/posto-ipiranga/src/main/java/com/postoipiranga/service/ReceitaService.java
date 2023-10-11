@@ -61,7 +61,8 @@ public class ReceitaService {
             throw new Exception("A quantidade de produtos vendidos não pode ser maior que o estoque");
         }
 
-        estoque.get().setQuantidade(estoque.get().getQuantidade() - receitaDTO.getQuantidade());
+        estoque.get().setQuantidade((estoque.get().getQuantidade() + receita.getQuantidade())
+                - receitaDTO.getQuantidade());
 
         estoqueRepository.save(estoque.get());
 
@@ -128,7 +129,12 @@ public class ReceitaService {
         if (receitaModelDeletado.isEmpty()) {
             throw new Error("Nao existe receita !");
         }
+
+        receitaModelDeletado.get().getQuantidade();
+        receitaModelDeletado.get().getProductId().getId();
+
         modificarEstoqueMenos(receitaModelDeletado.get(), receitaModelDeletado.get().getProductId());
+
         receitaRepository.deleteById(id);
         return receitaModelDeletado;
     }
