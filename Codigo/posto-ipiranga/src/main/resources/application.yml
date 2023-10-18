@@ -3,6 +3,23 @@ spring:
     database: POSTGRESQL
     show-sql: true
     hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: tis_prod
+    url: jdbc:postgresql://localhost:5432/tis_prod
+    username: postgres
+    password: 121201gui
+  database:
+    driverClassName: org.postgresql.Driver
+server:
+  port: 7000
+---
+spring:
+  config.activate.on-profile: development
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
       ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/tis_prod
@@ -12,10 +29,9 @@ spring:
     driverClassName: org.postgresql.Driver
 server:
   port: 7000
-
 ---
 spring:
-  config.activate.on-profile: development
+  config.activate.on-profile: deploy
   jpa:
     database: POSTGRESQL
     show-sql: true

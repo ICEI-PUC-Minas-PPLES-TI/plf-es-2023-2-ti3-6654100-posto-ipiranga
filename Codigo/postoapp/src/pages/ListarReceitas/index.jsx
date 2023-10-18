@@ -1,4 +1,4 @@
-import './ListarProdutos.scss'
+import './ListarReceitas.scss'
 import BarraPesquisa from '../../Components/public/BarraPesquisa';
 import Tabela from '../../Components/public/Tabela';
 import LeftNavMenu from '../../Layout/LeftNavMenu';
@@ -6,19 +6,18 @@ import LeftNavMenu from '../../Layout/LeftNavMenu';
 
 const ListarProdutos = () => {
     //LISTA DE TITULOS DAS COLUNAS
-    const listaThProdutos = ['ID', 'NOME', 'MARCA', 'UNIDADE DE MEDIDA', 'PREÇO', 'OPÇÕES']
+    const listaTh = ['ID', 'QUANTIDADE VENDIDA', 'PRODUTO', 'DATA', 'VALOR UNITÁRIO', 'VALOR TOTAL', 'OPÇÕES']
 
     //LISTA DE TIPO DO INPUT DE CRIAR E EDITAR NA ORDEM
-    const listaTypes = ['text', 'text', 'text', 'number'];
+    const listaTypes = ['number'];
 
     //LISTA DE ATRIBUTOS COMO VEM DO BANCO
-    const listaDadosProdutos = ['id', 'nome', 'marca', 'unidadeMedida','preco' ]
+    const listaDados = ['id', 'quantidade', 'nome', 'dataTransacao', 'preco', 'precoTotal' ]
 
     //LISTA DE ATRIBUTOS ALTERADOS NO UPDATE
-    const listaUpdate = ['nome', 'marca', 'unidadeMedida', 'preco']
+    const listaUpdate = ['quantidade','id']
 
-    //LISTA DE ATRIBUTOS CRIADOS NO CREATE
-    const listaCreate = ['nome','marca', 'unidadeMedida', 'preco']
+    const listaCreate = ['quantidade', 'productId']
     
 
     return(
@@ -29,15 +28,15 @@ const ListarProdutos = () => {
                 </div>
                 <div className='topbar col-md-9'>
         
-                    <h1 id="titulo">Controle de Produtos</h1>
+                    <h1 id="titulo">Controle de Receitas</h1>
                     <BarraPesquisa />
 
                     <Tabela 
-                    url={'http://localhost:7000/produtos'}
-                    listaTh={listaThProdutos}
-                    listaDados={listaDadosProdutos}
+                    url={'http://localhost:7000/receita'}
+                    listaTh={listaTh}
+                    listaDados={listaDados}
                     listaTypes={listaTypes}
-                    tipo={'produtos'}
+                    tipo={'receitas'}
                     listaUpdate={listaUpdate}
                     botaoAdicionar={true}
                     listaCreate={listaCreate}

@@ -30,4 +30,4 @@ COPY --from=builder /app/target/*.jar /app.jar
 EXPOSE $PORT
 
 # Comando para executar a aplicação quando o contêiner for iniciado
-CMD ["java", "-jar", "/app.jar", "--spring.profiles.active=development"]
+CMD ["java", "-jar", "/app.jar", "--spring.profiles.active=deploy"]

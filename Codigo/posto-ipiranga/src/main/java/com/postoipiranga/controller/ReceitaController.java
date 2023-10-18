@@ -2,7 +2,8 @@ package com.postoipiranga.controller;
 
 import com.postoipiranga.controller.dto.EstoqueDTO;
 import com.postoipiranga.controller.dto.MessageDTO;
-import com.postoipiranga.service.EstoqueService;
+import com.postoipiranga.controller.dto.ReceitaDTO;
+import com.postoipiranga.service.ReceitaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +13,20 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/estoque")
-public class EstoqueController {
-    private final EstoqueService estoqueService;
+@RequestMapping("/receita")
+public class ReceitaController {
+    private final ReceitaService receitaService;
 
-    public EstoqueController(EstoqueService estoqueService) {
-        this.estoqueService = estoqueService;
+    public ReceitaController(ReceitaService receitaService) {
+        this.receitaService = receitaService;
 
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllEstoque() {
+    public ResponseEntity<?> getAllReceita() {
 
         try {
-            final var response = estoqueService.findAll();
+            final var response = receitaService.findReceitas();
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
@@ -34,14 +35,14 @@ public class EstoqueController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getEstoqueById(@PathVariable @Valid final long id) {
+    public ResponseEntity<?> getReceitaById(@PathVariable @Valid final long id) {
 
         try {
-            if (estoqueService.existsById(id)) {
-                final var response = estoqueService.findById(id);
+            if (receitaService.existsById(id)) {
+                final var response = receitaService.findById(id);
                 return ResponseEntity.ok(response);
             } else {
-                final var message = new MessageDTO("Product with ID " + id + " not found.");
+                final var message = new MessageDTO("Receita with ID " + id + " not found.");
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
             }
         } catch (Exception e) {
@@ -50,46 +51,25 @@ public class EstoqueController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createProduct(@RequestBody @Valid final EstoqueDTO estoqueDTO) {
+    public ResponseEntity<?> createReceita(@RequestBody @Valid final ReceitaDTO receitaDTO) {
 
         try {
-            final var response = estoqueService.save(estoqueDTO);
+            final var response = receitaService.save(receitaDTO);
 
             return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(e);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable final long id, @RequestBody @Valid final EstoqueDTO estoqueDTO) {
-
-        try {
-
-            if (estoqueService.existsById(id)) {
-                estoqueDTO.setId(id);
-            } else {
-                final var message = new MessageDTO("Estoque with ID " + id + " not found.");
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-            }
-
-            final var response = estoqueService.save(id, estoqueDTO);
-
-            return ResponseEntity.ok(response);
-
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable final long id) {
+    public ResponseEntity<?> deleteReceita(@PathVariable final long id) {
 
         try {
 
-            if (estoqueService.existsById(id)) {
+            if (receitaService.existsById(id)) {
 
-                final var response = estoqueService.delete(id);
+                final var response = receitaService.delete(id);
 
                 return ResponseEntity.ok(response);
             } else {
@@ -100,4 +80,26 @@ public class EstoqueController {
             return ResponseEntity.internalServerError().body(e);
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateReceita(@PathVariable final long id, @RequestBody @Valid final ReceitaDTO receitaDTO) {
+
+        try {
+
+            if (!receitaService.existsById(id)) {
+                final var message = new MessageDTO("Receita with ID " + id + " not found.");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            }
+
+            receitaDTO.setProductId(id);
+
+            final var response = receitaService.save(id, receitaDTO);
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e);
+        }
+    }
 }
+

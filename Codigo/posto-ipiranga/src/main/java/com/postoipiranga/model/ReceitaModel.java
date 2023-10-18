@@ -1,6 +1,7 @@
 package com.postoipiranga.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,20 +15,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Estoque")
+@Table(name = "RECEITA")
 @Getter
 @Setter
-public class EstoqueModel {
+public class ReceitaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name="produto_id", nullable=false)
     private ProductModel productId;
-    @Column(name = "nome_produto")
-    private String productName;
     @Column(length = 150, nullable = false)
-    private String dataAtualizacao;
+    private String dataTransacao;
     @Column(nullable = false)
     private Long quantidade;
+    @Column(nullable = false)
+    private double precoTotal;
 }

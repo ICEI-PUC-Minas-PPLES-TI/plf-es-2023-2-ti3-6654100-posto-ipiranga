@@ -1,6 +1,6 @@
 import Logo from "../../Components/public/Logo"
 import ItemList from "../../Components/public/ItemList"
-import { faUser, faList } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faGasPump, faBoxesStacked, faSackDollar  } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Usuario from "../../Components/ListarUsuarios/Usuario";
 import { useEffect, useState } from 'react';
@@ -92,11 +92,27 @@ const LeftNavMenu = () => {
             />
 
             <ItemList
-              icone={<FontAwesomeIcon icon={faList} style={{ color: 'var(--dark-blue)' }} />}
-              categoriaNome={'Controle de Estoque'}
+              icone={<FontAwesomeIcon icon={faGasPump} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Controle de Produtos'}
               categoriaPath={'listaprodutos'}
               selecionado={selectedItem === 'listaprodutos'} 
               clicado={() => alterarSelecionado('listaprodutos')} 
+            />
+
+            <ItemList
+              icone={<FontAwesomeIcon icon={faBoxesStacked} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Controle de Estoque'}
+              categoriaPath={'listaestoque'}
+              selecionado={selectedItem === 'listaestoque'} 
+              clicado={() => alterarSelecionado('listaestoque')} 
+            />
+
+             <ItemList
+              icone={<FontAwesomeIcon icon={faSackDollar} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Controle de Receitas'}
+              categoriaPath={'listareceitas'}
+              selecionado={selectedItem === 'listareceitas'} 
+              clicado={() => alterarSelecionado('listareceitas')} 
             />
             </div>
         </nav>
