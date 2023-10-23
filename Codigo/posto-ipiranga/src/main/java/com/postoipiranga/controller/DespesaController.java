@@ -11,7 +11,7 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/despesa")
+@RequestMapping("/despesas")
 public class DespesaController {
     private final DespesaService despesaService;
 
@@ -59,6 +59,24 @@ public class DespesaController {
             return ResponseEntity.internalServerError().body(e);
         }
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateDespesa(@RequestBody @Valid final DespesaDTO despesaDTO,
+                                           @PathVariable final long id) {
+
+        try {
+            final var response = despesaService.editDespesa(id, despesaDTO);
+
+            if (response == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Despesa com o id " + id + "não existe.");
+            }
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e);
+        }
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDespesa(@PathVariable final long id) {
