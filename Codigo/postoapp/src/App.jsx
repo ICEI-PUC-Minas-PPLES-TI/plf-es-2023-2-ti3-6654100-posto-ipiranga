@@ -8,6 +8,7 @@ import ListarProdutos from './pages/ListarProdutos'
 import { useState } from 'react';
 import ListarEstoque from './pages/ListarEstoque'
 import ListarReceitas from './pages/ListarReceitas'
+import ListarDespesas from './pages/ListarDespesas'
 
 function App() {
   const [dadosUserContext, setDadosUserContext] = useState({ 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/listaprodutos" element={<PrivateRoute element={ListarProdutos} />} /> 
           <Route path="/listaestoque" element={<PrivateRoute element={ListarEstoque} />} /> 
           <Route path="/listareceitas" element={<PrivateRoute element={ListarReceitas} />} /> 
+          <Route path="/listadespesas" element={<PrivateRoute element={ListarDespesas} />} /> 
             {/*  <Route path="/listausuarios" element={<ListarUsuarios />} />*/}
           <Route path="/" element={<Login />} />
         </Routes>
