@@ -1,15 +1,6 @@
 package com.postoipiranga.model;
 
-import java.sql.Date;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,15 +12,10 @@ public class DespesaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name="produto_id", nullable=false)
-    private ProductModel productId;
     @Column(length = 150, nullable = false)
-    private Date dataTransacao;
+    private String data;
     @Column(nullable = false)
-    private double precoUnidade;
+    private String descricao;
     @Column(nullable = false)
-    private Long quantidade;
-    @Column(nullable = false)
-    private double precoTotal;
+    private Double valor;
 }
