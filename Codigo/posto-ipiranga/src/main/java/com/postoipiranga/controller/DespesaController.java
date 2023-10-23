@@ -60,7 +60,7 @@ public class DespesaController {
         }
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateDespesa(@RequestBody @Valid final DespesaDTO despesaDTO,
                                            @PathVariable final long id) {
 
