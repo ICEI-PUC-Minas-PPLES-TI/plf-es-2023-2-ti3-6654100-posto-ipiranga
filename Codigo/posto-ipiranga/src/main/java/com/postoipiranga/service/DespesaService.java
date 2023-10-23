@@ -60,7 +60,8 @@ public class DespesaService {
             return null;
         }
 
-        data.applyTo(despesa.get());
+        despesa.get().setDescricao(data.getDescricao());
+        despesa.get().setValor(data.getValor());
 
         return despesaRepository.save(despesa.get());
 
