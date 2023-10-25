@@ -1,15 +1,15 @@
 package com.postoipiranga.controller.dto;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.Setter;
-@Getter
-@Setter
+@Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DespesaDTO {
-    private Long id;
-    private Long productId;
-    private Date dataTransacao;
-    private double precoUnidade;
-    private Long quantidade;
+
+    @JsonProperty("descricao")
+    private String descricao;
+    @JsonProperty("valor")
+    private Double valor;
 }
