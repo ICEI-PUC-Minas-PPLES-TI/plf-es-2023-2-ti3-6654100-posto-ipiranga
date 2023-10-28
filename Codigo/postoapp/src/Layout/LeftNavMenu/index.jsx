@@ -1,6 +1,6 @@
 import Logo from "../../Components/public/Logo"
 import ItemList from "../../Components/public/ItemList"
-import { faUser, faGasPump, faBoxesStacked, faSackDollar , faMoneyCheckDollar } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faGasPump, faBoxesStacked, faSackDollar , faMoneyCheckDollar, faFile } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Usuario from "../../Components/ListarUsuarios/Usuario";
 import { useEffect, useState } from 'react';
@@ -121,6 +121,14 @@ const LeftNavMenu = () => {
               categoriaPath={'listadespesas'}
               selecionado={selectedItem === 'listadespesas'} 
               clicado={() => alterarSelecionado('listadespesas')} 
+            />
+
+            <ItemList
+              icone={<FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />}
+              categoriaNome={'Geração de Relatórios'}
+              categoriaPath={'relatorios'}
+              selecionado={selectedItem === 'relatorios'} 
+              clicado={() => alterarSelecionado('relatorios')} 
             />
             </div>
         </nav>
