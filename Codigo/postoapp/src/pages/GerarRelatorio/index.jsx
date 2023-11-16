@@ -4,6 +4,7 @@ import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Botao from '../../Components/public/Botao';
 import { useState } from 'react';
+import html2pdf from 'html2pdf.js';
 import { PDFDocument } from 'pdf-lib';
 
 const GerarRelatorio = () => {
@@ -28,8 +29,8 @@ const GerarRelatorio = () => {
       });
       const [previewDisplay, setPreviewDisplay] = useState(
         {
-            despesas: false,
-            receitas: false,
+            despesa: false,
+            receita: false,
             estoque: false
 
         }
@@ -87,11 +88,18 @@ const GerarRelatorio = () => {
     
             
 
-      const handleCheckboxChange = (index) => {
+    const handleCheckboxChange = (index) => {
         const updatedOpcoesRelatorio = [...opcoesRelatorio];
         updatedOpcoesRelatorio[index].selecionado = !updatedOpcoesRelatorio[index].selecionado;
         setOpcoesRelatorio(updatedOpcoesRelatorio);
+      
+        const previewDisplayUpdate = { ...previewDisplay };
+        console.log( previewDisplayUpdate[opcoesRelatorio[index].name])
+        previewDisplayUpdate[opcoesRelatorio[index].name] = updatedOpcoesRelatorio[index].selecionado;
+        console.log(previewDisplayUpdate)
+        setPreviewDisplay(previewDisplayUpdate);
       };
+      
 
       const baixarRelatorios = async () => {
         const selectedReports = opcoesRelatorio
@@ -146,8 +154,8 @@ const GerarRelatorio = () => {
     
 
     return(
-        <main>
-            <div className='conteudo-pagina'>
+        <main className="container-fluid" >
+            <div className='row'  id="listausuarios">
             <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem', padding: '0'}}>
                   <LeftNavMenu />
             </div>
@@ -192,7 +200,7 @@ const GerarRelatorio = () => {
                     </div>
                     <div className='preview-relatório'>
 
-                    <table className='table table-relatorio table-despesa' style={{ display: previewDisplay.despesas ? 'table' : 'none' }}>
+                    <table className='table table-relatorio table-despesa' style={{ display: previewDisplay.despesa ? 'table' : 'none' }}>
                         <thead>
                             <tr>
                             <th style={{color: 'white', backgroundColor: '#1879bf', fontWeight: '800', fontSize: '1.3rem'}} colSpan="3">Relatório de Despesas</th>
@@ -216,7 +224,7 @@ const GerarRelatorio = () => {
 
                     
 
-                    <table className='table table-relatorio table-receita' style={{ display: previewDisplay.receitas ? 'table' : 'none' }}>
+                    <table className='table table-relatorio table-receita' style={{ display: previewDisplay.receita ? 'table' : 'none' }}>
                         <thead>
                             <tr>
                             <th style={{color: 'white', backgroundColor: '#1879bf', fontWeight: '800', fontSize: '1.3rem'}} colSpan="4">Relatório de Receitas</th>
