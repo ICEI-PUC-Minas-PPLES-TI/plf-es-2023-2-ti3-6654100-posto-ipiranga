@@ -334,11 +334,18 @@ function recarregarPagina() {
             <td style={checkAtivo ? { display: 'flex-box' } : { display: 'none' }}>
               <div className="form-check form-switch">
                 <input
-                  onChange={() => handleStatusChange(index)}
+                  onChange={() => {
+                    // Verifica se o perfil é ADMINISTRADOR antes de inativar
+                    if (item.perfil !== "ADMINISTRADOR") {
+                      handleStatusChange(index);
+                    }
+                  }}
                   className="form-check-input"
                   type="checkbox"
                   id={`statusSwitch${index}`}
                   checked={item.status}
+                  disabled={item.perfil === "ADMINISTRADOR"}
+                  // Adicionei o atributo "disabled" se o perfil for ADMINISTRADOR
                 />
                 <label className="form-check-label" htmlFor={`statusSwitch${index}`}>
                   {item.status ? 'Ativo' : 'Inativo'}
@@ -346,19 +353,25 @@ function recarregarPagina() {
               </div>
             </td>
 
-            <td className='seleciona'  style={checkAtivo ? { display: 'flex-box' } : { display: 'none' }}>
+
+            <td className='seleciona' style={checkAtivo ? { display: 'flex-box' } : { display: 'none' }}>
               <select
-                
                 id='formSelect'
                 className="form-select"
                 value={item.perfil}
                 onChange={(e) => handlePerfilChange(index, e.target.value)}
               >
-                <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                <option value="USUARIO">USUARIO</option>
-                <option value="GERENTE">GERENTE</option>
+                {item.perfil === "ADMINISTRADOR" ? (
+                  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                ) : (
+                  <>
+                    <option value="USUARIO">USUARIO</option>
+                    <option value="GERENTE">GERENTE</option>
+                  </>
+                )}
               </select>
             </td>
+
 
           </tr>
         ))}
