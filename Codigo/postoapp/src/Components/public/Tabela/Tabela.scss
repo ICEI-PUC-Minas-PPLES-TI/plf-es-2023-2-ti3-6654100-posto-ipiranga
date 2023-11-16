@@ -41,7 +41,16 @@
         cursor: pointer;
         }
     }
-  
+        
+        .fundo-modal {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.199)
+        }
+
         .modal {
             animation: aparecer 0.3s ease-in-out;
             display: flex;

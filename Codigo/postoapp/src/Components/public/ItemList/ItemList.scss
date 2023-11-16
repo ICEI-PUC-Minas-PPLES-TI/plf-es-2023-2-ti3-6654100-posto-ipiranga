@@ -1,5 +1,7 @@
 
 .itemList{
+    display: flex;
+    flex-direction: row;
     cursor: pointer;
     padding-block: 1rem;
     padding-left: 1rem;

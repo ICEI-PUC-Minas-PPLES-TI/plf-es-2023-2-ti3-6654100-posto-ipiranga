@@ -20,7 +20,7 @@ const ItemList = ({ icone, categoriaNome, categoriaPath, selecionado, clicado}) 
                 ? { borderRight: '6px solid var(--dark-blue)' }
                 : { borderRight: 'none' }
             }
-            className='itemList nav-item row'
+            className='itemList'
         >
             <div className='col-md-1'>
                 {icone}

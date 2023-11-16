@@ -277,7 +277,8 @@ function recarregarPagina() {
   return (
     <>
     <table className="table">
-    <div className='modal' style={{display: editarDisplay}}>
+    <div className='fundo-modal' style={{display: editarDisplay}}>
+      <div className='modal' >
       <h1>{titulo} {tipo}</h1>
               {dadosInput.map((chave, index) => (
           <div className='textfield-modal' key={index}>
@@ -294,6 +295,7 @@ function recarregarPagina() {
       <div className='botoes'>
         <button onClick={salvar} style={{backgroundColor: 'var(--light-blue)'}}>Salvar</button>
         <button style={{backgroundColor: '#d64e4e'}} onClick={()=>setEditarDisplay('none')} >Sair</button>
+      </div>
       </div>
     </div>
 

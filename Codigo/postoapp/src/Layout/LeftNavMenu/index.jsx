@@ -4,6 +4,7 @@ import { faUser, faGasPump, faBoxesStacked, faSackDollar , faMoneyCheckDollar, f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Usuario from "../../Components/ListarUsuarios/Usuario";
 import { useEffect, useState } from 'react';
+import './LeftNavMenu.scss'
 
 const LeftNavMenu = () => {
     const [dadosUsuario, setDadosUsuario] = useState({
@@ -73,15 +74,16 @@ const LeftNavMenu = () => {
 
     return(
    
-        <nav className="left-menu ">
+        <div className="left-menu">
             <Logo 
             maxw={'10rem'}
             />
-           <div className="col-md-12">
+           
           
             <Usuario 
             email = {dadosUsuario.email}
             />
+           
            
             <ItemList
               icone={<FontAwesomeIcon icon={faUser} style={{ color: 'var(--dark-blue)' }} />}
@@ -130,8 +132,8 @@ const LeftNavMenu = () => {
               selecionado={selectedItem === 'relatorios'} 
               clicado={() => alterarSelecionado('relatorios')} 
             />
-            </div>
-        </nav>
+        
+        </div>
 
     )
 }

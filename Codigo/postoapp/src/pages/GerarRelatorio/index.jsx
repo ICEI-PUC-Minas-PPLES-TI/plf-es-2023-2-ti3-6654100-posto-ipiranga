@@ -149,7 +149,7 @@ const GerarRelatorio = () => {
     return(
         <main className="container-fluid" >
             <div className='row'  id="listausuarios">
-            <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem'}}>
+            <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem', padding: '0'}}>
                   <LeftNavMenu />
             </div>
             <div className='topbar col-md-9' style={{paddingBottom: '5rem'}}>
