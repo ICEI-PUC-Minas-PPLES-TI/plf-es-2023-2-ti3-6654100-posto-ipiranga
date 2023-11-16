@@ -1,4 +1,3 @@
-import './ListarDespesas.scss'
 import BarraPesquisa from '../../Components/public/BarraPesquisa';
 import Tabela from '../../Components/public/Tabela';
 import LeftNavMenu from '../../Layout/LeftNavMenu';
@@ -22,8 +21,8 @@ const ListarDespesas = () => {
     
 
     return(
-        <main className="container-fluid">
-            <div className='row'  id="listausuarios">
+        <main>
+            <div className='conteudo-pagina'>
             <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem', padding: '0'}}>
                     <LeftNavMenu />
                 </div>

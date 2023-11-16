@@ -279,6 +279,7 @@ function recarregarPagina() {
     <table className="table">
     <div className='fundo-modal' style={{display: editarDisplay}}>
       <div className='modal' >
+      <span className='xSair' onClick={()=>setEditarDisplay('none')}>X</span>
       <h1>{titulo} {tipo}</h1>
               {dadosInput.map((chave, index) => (
           <div className='textfield-modal' key={index}>

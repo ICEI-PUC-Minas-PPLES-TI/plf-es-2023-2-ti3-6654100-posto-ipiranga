@@ -4,7 +4,6 @@ import { faFile } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Botao from '../../Components/public/Botao';
 import { useState } from 'react';
-import html2pdf from 'html2pdf.js';
 import { PDFDocument } from 'pdf-lib';
 
 const GerarRelatorio = () => {
@@ -147,8 +146,8 @@ const GerarRelatorio = () => {
     
 
     return(
-        <main className="container-fluid" >
-            <div className='row'  id="listausuarios">
+        <main>
+            <div className='conteudo-pagina'>
             <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem', padding: '0'}}>
                   <LeftNavMenu />
             </div>

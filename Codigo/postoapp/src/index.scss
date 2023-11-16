@@ -7,6 +7,15 @@
   --dark-blue: #1879bf;
 }
 
+
+.conteudo-pagina{ 
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  animation: aparecer 0.4s ease-in-out;
+}
+
 @mixin flexCenter($flex-direction){
   display: flex;
   flex-direction: $flex-direction;

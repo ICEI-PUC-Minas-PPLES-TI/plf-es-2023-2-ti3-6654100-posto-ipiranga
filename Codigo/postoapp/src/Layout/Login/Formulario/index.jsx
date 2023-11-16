@@ -103,10 +103,16 @@ const Formulario = () => {
         localStorage.setItem('status', 'logado')
         localStorage.setItem('userID', responseData.id);
         localStorage.setItem('perfil', responseData.perfil);
-        localStorage.setItem('itemMenu', 'listausuarios');
         console.log(localStorage.getItem('perfil'))
-
-        navigate('/listausuarios');
+        if(responseData.perfil === 'ADMINISTRADOR') {
+          localStorage.setItem('itemMenu', 'listausuarios');
+          navigate('/listausuarios');
+        }
+        else {
+          localStorage.setItem('itemMenu', 'listaprodutos');
+          navigate('/listaprodutos');
+        }
+      
       } catch (error) {
         Swal.fire({
           icon: 'error',

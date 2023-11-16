@@ -1,10 +1,11 @@
 import Logo from "../../Components/public/Logo"
 import ItemList from "../../Components/public/ItemList"
-import { faUser, faGasPump, faBoxesStacked, faSackDollar , faMoneyCheckDollar, faFile } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faGasPump, faBoxesStacked, faSackDollar , faMoneyCheckDollar, faFile, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Usuario from "../../Components/ListarUsuarios/Usuario";
 import { useEffect, useState } from 'react';
 import './LeftNavMenu.scss'
+import { useNavigate } from 'react-router-dom';
 
 const LeftNavMenu = () => {
     const [dadosUsuario, setDadosUsuario] = useState({
@@ -15,11 +16,17 @@ const LeftNavMenu = () => {
         statusUsuario: "",
         senha: ""
       });
-      
+      const perfil = localStorage.getItem('perfil');
     const [selectedItem, setSelectedItem] = useState(localStorage.getItem('itemMenu'));
-  
+    const navigate = useNavigate();
+
     const alterarSelecionado = (selecionado) => {
       localStorage.setItem('itemMenu', selecionado);
+    }
+
+    const logout = () => {
+      localStorage.clear();
+      navigate('/');
     }
 
     useEffect(() => {
@@ -74,7 +81,12 @@ const LeftNavMenu = () => {
 
     return(
    
-        <div className="left-menu">
+        <div className="left-menu" style={{paddingTop: '5rem'}}>
+            <div onClick={logout} className="logout-btn">
+              <span>Sair</span>
+              <FontAwesomeIcon icon={faRightFromBracket} style={{ color: 'var(--dark-blue)' }} />
+            </div>
+
             <Logo 
             maxw={'10rem'}
             />
@@ -91,6 +103,7 @@ const LeftNavMenu = () => {
               categoriaPath={'listausuarios'}
               selecionado={selectedItem === 'listausuarios'} 
               clicado={() => alterarSelecionado('listausuarios')} 
+              display={ perfil === 'ADMINISTRADOR'}
             />
 
             <ItemList
@@ -99,6 +112,7 @@ const LeftNavMenu = () => {
               categoriaPath={'listaprodutos'}
               selecionado={selectedItem === 'listaprodutos'} 
               clicado={() => alterarSelecionado('listaprodutos')} 
+              display={'true'}
             />
 
             <ItemList
@@ -107,6 +121,7 @@ const LeftNavMenu = () => {
               categoriaPath={'listaestoque'}
               selecionado={selectedItem === 'listaestoque'} 
               clicado={() => alterarSelecionado('listaestoque')} 
+              display={ perfil === 'GERENTE' || perfil === 'ADMINISTRADOR'}
             />
 
              <ItemList
@@ -115,6 +130,7 @@ const LeftNavMenu = () => {
               categoriaPath={'listareceitas'}
               selecionado={selectedItem === 'listareceitas'} 
               clicado={() => alterarSelecionado('listareceitas')} 
+              display={ perfil === 'GERENTE' || perfil === 'ADMINISTRADOR'}
             />
 
             <ItemList
@@ -123,6 +139,7 @@ const LeftNavMenu = () => {
               categoriaPath={'listadespesas'}
               selecionado={selectedItem === 'listadespesas'} 
               clicado={() => alterarSelecionado('listadespesas')} 
+              display={ perfil === 'GERENTE' || perfil === 'ADMINISTRADOR'}
             />
 
             <ItemList
@@ -131,6 +148,7 @@ const LeftNavMenu = () => {
               categoriaPath={'relatorios'}
               selecionado={selectedItem === 'relatorios'} 
               clicado={() => alterarSelecionado('relatorios')} 
+              display={ perfil === 'GERENTE' || perfil === 'ADMINISTRADOR'}
             />
         
         </div>
