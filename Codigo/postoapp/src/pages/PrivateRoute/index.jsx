@@ -9,9 +9,6 @@ const PrivateRoute = ({ element: Element, ...rest }) => {
   const value = localStorage.getItem('status');
   const tipoUsuario = localStorage.getItem('perfil');
 
-  useEffect(() => {
-    console.log(Element.name);
-  }, [Element]);
 
   if (value !== 'logado') {
     return <Navigate to="/" />;

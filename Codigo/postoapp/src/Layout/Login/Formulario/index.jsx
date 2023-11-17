@@ -62,7 +62,6 @@ const Formulario = () => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log(dadosUsuario);
     
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     
@@ -103,7 +102,7 @@ const Formulario = () => {
         localStorage.setItem('status', 'logado')
         localStorage.setItem('userID', responseData.id);
         localStorage.setItem('perfil', responseData.perfil);
-        console.log(localStorage.getItem('perfil'))
+     
         if(responseData.perfil === 'ADMINISTRADOR') {
           localStorage.setItem('itemMenu', 'listausuarios');
           navigate('/listausuarios');

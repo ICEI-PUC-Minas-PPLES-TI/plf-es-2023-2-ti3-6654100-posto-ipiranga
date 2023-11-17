@@ -47,12 +47,12 @@ const GerarRelatorio = () => {
     
         // Create an array of promises for all selected options
         const promessas = opcoesSelecionadas.map(opcao => {
-            console.log(opcao.name);
+      
             const apiUrl = `http://localhost:7000/relatorios?tipoRelatorio=${opcao.name.toUpperCase()}`;
             return fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
+             
                     return { opcao: opcao, data: data };
                 })
                 .catch(error => {
@@ -93,10 +93,8 @@ const GerarRelatorio = () => {
         updatedOpcoesRelatorio[index].selecionado = !updatedOpcoesRelatorio[index].selecionado;
         setOpcoesRelatorio(updatedOpcoesRelatorio);
       
-        const previewDisplayUpdate = { ...previewDisplay };
-        console.log( previewDisplayUpdate[opcoesRelatorio[index].name])
+        const previewDisplayUpdate = { ...previewDisplay };    
         previewDisplayUpdate[opcoesRelatorio[index].name] = updatedOpcoesRelatorio[index].selecionado;
-        console.log(previewDisplayUpdate)
         setPreviewDisplay(previewDisplayUpdate);
       };
       

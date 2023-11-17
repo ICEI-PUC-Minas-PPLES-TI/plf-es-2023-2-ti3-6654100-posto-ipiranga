@@ -57,9 +57,7 @@ const editarItem = (item) => {
   const formValues = {};
   
   for (const chave in item) {
-    console.log(chave)
     if (item.hasOwnProperty(chave) && listaUpdate.includes(chave)) {
-      console.log(chave)
       formValues[chave] = item[chave];
     }
   }
@@ -77,7 +75,6 @@ function criarFormValues(listaCampos) {
     }
   });
 
-  console.log(formValues)
   return formValues;
 }
 
@@ -97,7 +94,6 @@ const handleInputChange = (event) => {
 
 
 const salvar = () => {
-  console.log(formValues.id)
 
   if(!formValues.id) {
     fetch(`${url}`, {
@@ -176,7 +172,7 @@ function recarregarPagina() {
         }
 
         const responseData = await response.json();
-        console.log(responseData)
+        
         const resposta = responseData.map((item) => {
           const obj = {};
           listaDados.forEach((prop, index) => {
