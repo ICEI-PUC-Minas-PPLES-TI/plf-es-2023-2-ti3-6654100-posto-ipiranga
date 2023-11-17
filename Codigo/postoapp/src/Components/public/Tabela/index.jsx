@@ -197,6 +197,10 @@ function recarregarPagina() {
     fetchUserData();
   }, [url]);
 
+  const formatarDinheiro = (valor) => {
+    return parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
+
   function formatarTelefone(telefone) {
     const numeroLimpo = telefone.replace(/\D/g, '');
 
@@ -309,7 +313,9 @@ function recarregarPagina() {
             {
                !isUsuario ? (
                 Object.keys(item).map((key) => (
-                  <td className='col-md-auto' key={key}>{item[key]}</td>
+                  <td className='col-md-auto' key={key}>
+                  {key === 'valor' || key === 'preco' ? formatarDinheiro(item[key]) : item[key]}
+                </td>
                 ))
              
               ) : (
