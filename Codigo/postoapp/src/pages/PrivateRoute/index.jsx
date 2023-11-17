@@ -21,6 +21,10 @@ const PrivateRoute = ({ element: Element, ...rest }) => {
     return <ListarProdutos />;
   }
 
+  if (tipoUsuario === 'USUARIO' && Element.name !== 'ListarProdutos') {
+    return <ListarProdutos />;
+  }
+
   return <Element {...rest} />;
 };
 

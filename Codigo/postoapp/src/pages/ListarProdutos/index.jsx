@@ -1,4 +1,3 @@
-import './ListarProdutos.scss'
 import BarraPesquisa from '../../Components/public/BarraPesquisa';
 import Tabela from '../../Components/public/Tabela';
 import LeftNavMenu from '../../Layout/LeftNavMenu';

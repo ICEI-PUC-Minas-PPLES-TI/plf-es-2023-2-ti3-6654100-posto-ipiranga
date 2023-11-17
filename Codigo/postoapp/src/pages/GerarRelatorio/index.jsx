@@ -168,7 +168,7 @@ const GerarRelatorio = () => {
                             checked={opcoesRelatorio[0].selecionado}
                             onChange={() => handleCheckboxChange(0)}
                             />
-                            <span>Gerar relatório de despesas</span>
+                             <span style={{cursor: 'pointer'}} onClick={() => handleCheckboxChange(0)}>Gerar relatório de despesas</span>
                             <FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />
                         </div>
                         <div className="opcao-relatorio">
@@ -177,7 +177,7 @@ const GerarRelatorio = () => {
                             checked={opcoesRelatorio[1].selecionado}
                             onChange={() => handleCheckboxChange(1)}
                             />
-                            <span>Gerar relatório de receitas</span>
+                              <span style={{cursor: 'pointer'}} onClick={() => handleCheckboxChange(1)}>Gerar relatório de receitas</span>
                             <FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />
                         </div>
                         <div className="opcao-relatorio">
@@ -186,7 +186,7 @@ const GerarRelatorio = () => {
                             checked={opcoesRelatorio[2].selecionado}
                             onChange={() => handleCheckboxChange(2)}
                             />
-                            <span>Gerar relatório de estoque e produtos</span>
+                            <span style={{cursor: 'pointer'}} onClick={() => handleCheckboxChange(2)}>Gerar relatório de estoque e produtos</span>
                             <FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />
                         </div>
                     <div className='col-md-6'>
