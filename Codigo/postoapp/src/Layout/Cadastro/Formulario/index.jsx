@@ -72,13 +72,11 @@ const Formulario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-      console.log(dadosUsuario)
         const telefoneNumerico = dadosUsuario.telefone.replace(/\D/g, '');
 
       dadosUsuario.telefone = telefoneNumerico;
 
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        console.log(dadosUsuario)
         
               if ( !dadosUsuario.email|| !dadosUsuario.senha || !dadosUsuario.telefone || !dadosUsuario.nomeCompleto ) {
                 Swal.fire({

@@ -1,7 +1,7 @@
 import './ItemList.scss'
 import { useNavigate } from 'react-router-dom';
 
-const ItemList = ({ icone, categoriaNome, categoriaPath, selecionado, clicado}) => {
+const ItemList = ({ icone, categoriaNome, categoriaPath, selecionado, clicado, display}) => {
     const navigate = useNavigate();
 
     function handleClick () {
@@ -15,12 +15,14 @@ const ItemList = ({ icone, categoriaNome, categoriaPath, selecionado, clicado}) 
             clicado(); 
         }}
         
-            style={
-                selecionado
-                ? { borderRight: '6px solid var(--dark-blue)' }
-                : { borderRight: 'none' }
+        style={
+            {
+              borderRight: selecionado ? '6px solid var(--dark-blue)' : 'none',
+              display: display ? 'flex' : 'none',
             }
-            className='itemList nav-item row'
+          }
+
+            className='itemList'
         >
             <div className='col-md-1'>
                 {icone}

@@ -29,8 +29,8 @@ const GerarRelatorio = () => {
       });
       const [previewDisplay, setPreviewDisplay] = useState(
         {
-            despesas: false,
-            receitas: false,
+            despesa: false,
+            receita: false,
             estoque: false
 
         }
@@ -47,12 +47,12 @@ const GerarRelatorio = () => {
     
         // Create an array of promises for all selected options
         const promessas = opcoesSelecionadas.map(opcao => {
-            console.log(opcao.name);
+      
             const apiUrl = `http://localhost:7000/relatorios?tipoRelatorio=${opcao.name.toUpperCase()}`;
             return fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
+             
                     return { opcao: opcao, data: data };
                 })
                 .catch(error => {
@@ -88,11 +88,16 @@ const GerarRelatorio = () => {
     
             
 
-      const handleCheckboxChange = (index) => {
+    const handleCheckboxChange = (index) => {
         const updatedOpcoesRelatorio = [...opcoesRelatorio];
         updatedOpcoesRelatorio[index].selecionado = !updatedOpcoesRelatorio[index].selecionado;
         setOpcoesRelatorio(updatedOpcoesRelatorio);
+      
+        const previewDisplayUpdate = { ...previewDisplay };    
+        previewDisplayUpdate[opcoesRelatorio[index].name] = updatedOpcoesRelatorio[index].selecionado;
+        setPreviewDisplay(previewDisplayUpdate);
       };
+      
 
       const baixarRelatorios = async () => {
         const selectedReports = opcoesRelatorio
@@ -149,7 +154,7 @@ const GerarRelatorio = () => {
     return(
         <main className="container-fluid" >
             <div className='row'  id="listausuarios">
-            <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem'}}>
+            <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem', padding: '0'}}>
                   <LeftNavMenu />
             </div>
             <div className='topbar col-md-9' style={{paddingBottom: '5rem'}}>
@@ -161,7 +166,7 @@ const GerarRelatorio = () => {
                             checked={opcoesRelatorio[0].selecionado}
                             onChange={() => handleCheckboxChange(0)}
                             />
-                            <span>Gerar relatório de despesas</span>
+                             <span style={{cursor: 'pointer'}} onClick={() => handleCheckboxChange(0)}>Gerar relatório de despesas</span>
                             <FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />
                         </div>
                         <div className="opcao-relatorio">
@@ -170,7 +175,7 @@ const GerarRelatorio = () => {
                             checked={opcoesRelatorio[1].selecionado}
                             onChange={() => handleCheckboxChange(1)}
                             />
-                            <span>Gerar relatório de receitas</span>
+                              <span style={{cursor: 'pointer'}} onClick={() => handleCheckboxChange(1)}>Gerar relatório de receitas</span>
                             <FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />
                         </div>
                         <div className="opcao-relatorio">
@@ -179,7 +184,7 @@ const GerarRelatorio = () => {
                             checked={opcoesRelatorio[2].selecionado}
                             onChange={() => handleCheckboxChange(2)}
                             />
-                            <span>Gerar relatório de estoque e produtos</span>
+                            <span style={{cursor: 'pointer'}} onClick={() => handleCheckboxChange(2)}>Gerar relatório de estoque e produtos</span>
                             <FontAwesomeIcon icon={faFile} style={{ color: 'var(--dark-blue)' }} />
                         </div>
                     <div className='col-md-6'>
@@ -193,7 +198,7 @@ const GerarRelatorio = () => {
                     </div>
                     <div className='preview-relatório'>
 
-                    <table className='table table-relatorio table-despesa' style={{ display: previewDisplay.despesas ? 'table' : 'none' }}>
+                    <table className='table table-relatorio table-despesa' style={{ display: previewDisplay.despesa ? 'table' : 'none' }}>
                         <thead>
                             <tr>
                             <th style={{color: 'white', backgroundColor: '#1879bf', fontWeight: '800', fontSize: '1.3rem'}} colSpan="3">Relatório de Despesas</th>
@@ -217,7 +222,7 @@ const GerarRelatorio = () => {
 
                     
 
-                    <table className='table table-relatorio table-receita' style={{ display: previewDisplay.receitas ? 'table' : 'none' }}>
+                    <table className='table table-relatorio table-receita' style={{ display: previewDisplay.receita ? 'table' : 'none' }}>
                         <thead>
                             <tr>
                             <th style={{color: 'white', backgroundColor: '#1879bf', fontWeight: '800', fontSize: '1.3rem'}} colSpan="4">Relatório de Receitas</th>

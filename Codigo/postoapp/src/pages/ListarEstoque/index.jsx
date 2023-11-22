@@ -18,9 +18,9 @@ const ListarEstoque = () => {
      const listaUpdate = ['quantidade' , 'id']
 
     return(
-        <main className="container-fluid">
-            <div className='row'  id="listausuarios">
-                <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem'}}>
+        <main>
+            <div className='conteudo-pagina'>
+            <div className='col-md-2 text-center' style={{background: 'var(--main-color)', paddingTop: '1rem', padding: '0'}}>
                     <LeftNavMenu />
                 </div>
                 <div className='topbar col-md-9'>

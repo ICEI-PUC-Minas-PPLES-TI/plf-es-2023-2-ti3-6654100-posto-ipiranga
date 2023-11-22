@@ -57,9 +57,7 @@ const editarItem = (item) => {
   const formValues = {};
   
   for (const chave in item) {
-    console.log(chave)
     if (item.hasOwnProperty(chave) && listaUpdate.includes(chave)) {
-      console.log(chave)
       formValues[chave] = item[chave];
     }
   }
@@ -77,7 +75,6 @@ function criarFormValues(listaCampos) {
     }
   });
 
-  console.log(formValues)
   return formValues;
 }
 
@@ -97,7 +94,6 @@ const handleInputChange = (event) => {
 
 
 const salvar = () => {
-  console.log(formValues.id)
 
   if(!formValues.id) {
     fetch(`${url}`, {
@@ -176,7 +172,7 @@ function recarregarPagina() {
         }
 
         const responseData = await response.json();
-        console.log(responseData)
+        
         const resposta = responseData.map((item) => {
           const obj = {};
           listaDados.forEach((prop, index) => {
@@ -200,6 +196,10 @@ function recarregarPagina() {
 
     fetchUserData();
   }, [url]);
+
+  const formatarDinheiro = (valor) => {
+    return parseFloat(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
 
   function formatarTelefone(telefone) {
     const numeroLimpo = telefone.replace(/\D/g, '');
@@ -277,7 +277,9 @@ function recarregarPagina() {
   return (
     <>
     <table className="table">
-    <div className='modal' style={{display: editarDisplay}}>
+    <div className='fundo-modal' style={{display: editarDisplay}}>
+      <div className='modal' >
+      <span className='xSair' onClick={()=>setEditarDisplay('none')}>X</span>
       <h1>{titulo} {tipo}</h1>
               {dadosInput.map((chave, index) => (
           <div className='textfield-modal' key={index}>
@@ -295,6 +297,7 @@ function recarregarPagina() {
         <button onClick={salvar} style={{backgroundColor: 'var(--light-blue)'}}>Salvar</button>
         <button style={{backgroundColor: '#d64e4e'}} onClick={()=>setEditarDisplay('none')} >Sair</button>
       </div>
+      </div>
     </div>
 
       <thead>
@@ -310,7 +313,9 @@ function recarregarPagina() {
             {
                !isUsuario ? (
                 Object.keys(item).map((key) => (
-                  <td className='col-md-auto' key={key}>{item[key]}</td>
+                  <td className='col-md-auto' key={key}>
+                  {key === 'valor' || key === 'preco' ? formatarDinheiro(item[key]) : item[key]}
+                </td>
                 ))
              
               ) : (
@@ -331,11 +336,18 @@ function recarregarPagina() {
             <td style={checkAtivo ? { display: 'flex-box' } : { display: 'none' }}>
               <div className="form-check form-switch">
                 <input
-                  onChange={() => handleStatusChange(index)}
+                  onChange={() => {
+                    // Verifica se o perfil é ADMINISTRADOR antes de inativar
+                    if (item.perfil !== "ADMINISTRADOR") {
+                      handleStatusChange(index);
+                    }
+                  }}
                   className="form-check-input"
                   type="checkbox"
                   id={`statusSwitch${index}`}
                   checked={item.status}
+                  disabled={item.perfil === "ADMINISTRADOR"}
+                  // Adicionei o atributo "disabled" se o perfil for ADMINISTRADOR
                 />
                 <label className="form-check-label" htmlFor={`statusSwitch${index}`}>
                   {item.status ? 'Ativo' : 'Inativo'}
@@ -343,19 +355,25 @@ function recarregarPagina() {
               </div>
             </td>
 
-            <td className='seleciona'  style={checkAtivo ? { display: 'flex-box' } : { display: 'none' }}>
+
+            <td className='seleciona' style={checkAtivo ? { display: 'flex-box' } : { display: 'none' }}>
               <select
-                
                 id='formSelect'
                 className="form-select"
                 value={item.perfil}
                 onChange={(e) => handlePerfilChange(index, e.target.value)}
               >
-                <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-                <option value="USUARIO">USUARIO</option>
-                <option value="GERENTE">GERENTE</option>
+                {item.perfil === "ADMINISTRADOR" ? (
+                  <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                ) : (
+                  <>
+                    <option value="USUARIO">USUARIO</option>
+                    <option value="GERENTE">GERENTE</option>
+                  </>
+                )}
               </select>
             </td>
+
 
           </tr>
         ))}

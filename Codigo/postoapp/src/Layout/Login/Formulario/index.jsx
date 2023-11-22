@@ -62,7 +62,6 @@ const Formulario = () => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log(dadosUsuario);
     
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     
@@ -103,10 +102,16 @@ const Formulario = () => {
         localStorage.setItem('status', 'logado')
         localStorage.setItem('userID', responseData.id);
         localStorage.setItem('perfil', responseData.perfil);
-        localStorage.setItem('itemMenu', 'listausuarios');
-        console.log(localStorage.getItem('userID'))
-
-        navigate('/listausuarios');
+     
+        if(responseData.perfil === 'ADMINISTRADOR') {
+          localStorage.setItem('itemMenu', 'listausuarios');
+          navigate('/listausuarios');
+        }
+        else {
+          localStorage.setItem('itemMenu', 'listaprodutos');
+          navigate('/listaprodutos');
+        }
+      
       } catch (error) {
         Swal.fire({
           icon: 'error',
