@@ -45,20 +45,7 @@ const Formulario = () => {
     }
     
 
-    function esqueciSenha() {
-      Swal.fire({
-        title: 'Recuperação de senha',
-        html: '<p>Informe o email cadastrado:</p><input style="width: 20vw"type="email"/>',
-        icon: 'info',
-        showCancelButton: true,
-        cancelButtonText: 'Voltar ',
-        confirmButtonText: 'Enviar',
-        customClass: {
-          title: 'custom-title-class' 
-        }
-      });
-  
-    }
+   
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -153,7 +140,6 @@ const Formulario = () => {
                 maxL={50}
                 mostrarSenha={<FontAwesomeIcon onClick={mostrarSenha} className='senha' icon={senhaIcone} style={{ color: 'white' }} />}
                 />    
-                <span onClick={esqueciSenha} className='col-md-12'>Esqueci a senha</span>
                 </div>            
                 <Botao 
                 botaoSubmit={handleSubmit}
