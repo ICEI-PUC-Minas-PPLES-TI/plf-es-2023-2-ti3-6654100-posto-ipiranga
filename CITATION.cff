@@ -5,37 +5,27 @@ authors:
   
   - family-names: Augustto Costa Barros
     given-names: Guilherme
-  
-  - family-names: Perlatto Lotti Garcia
-    given-names: Lucas
-  
   - family-names: Viniccius Souza de Freitas
     given-names: Marcus
-  
   - family-names: Guilherme Amancio Pereira Magela Benevenuto
     given-names: Pablo
-  
   - family-names: Inez de Almeida Calazans
     given-names: Raquel
-  
   - family-names: Vitor Pereira Saraiva
     given-names: Tiago
-  
+
   - name-suffix: Veloso
     affiliation: PUC Minas
     family-names: Alonso Veloso
     given-names: Eveline 
-
   - name-suffix: Carvalho
     affiliation: PUC Minas
     family-names: Amaral Baroni de
     given-names: Juliana 
- 
   - name-suffix: Silva
     affiliation: PUC Minas
     family-names: Henrique da Costa 
     given-names: Luiz 
-
 
 keywords:
   - Gestão
