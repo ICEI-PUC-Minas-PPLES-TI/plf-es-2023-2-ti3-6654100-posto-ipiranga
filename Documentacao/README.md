@@ -1,6 +1,5 @@
 # Posto Ipiranga
 
-Descrição:
 O Sistema de Gerenciamento de Posto de Combustível é uma solução abrangente projetada para otimizar e automatizar o processo de gerenciamento de um posto de combustível. Esse software oferece funcionalidades avançadas para controle de estoque de combustíveis, vendas, fluxo de caixa e gestão de clientes. Ele proporciona uma experiência intuitiva para os funcionários do posto e agiliza as operações diárias.
 
 ## Alunos integrantes da equipe
