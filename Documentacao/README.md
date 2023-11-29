@@ -1,5 +1,3 @@
-# Documentação do Projeto
-
 # Posto Ipiranga
 
 Descrição:
