@@ -1,8 +1,7 @@
 cff-version: 1.0.1
-message: Please cite this software using these metadata.
-title: Posto Ipiranga
+message: "Please cite this software using these metadata."
+title: "Posto Ipiranga"
 authors:
-  
   - family-names: Augustto Costa Barros
     given-names: Guilherme
   - family-names: Viniccius Souza de Freitas
@@ -13,7 +12,6 @@ authors:
     given-names: Raquel
   - family-names: Vitor Pereira Saraiva
     given-names: Tiago
-
   - name-suffix: Veloso
     affiliation: PUC Minas
     family-names: Alonso Veloso
@@ -26,14 +24,12 @@ authors:
     affiliation: PUC Minas
     family-names: Henrique da Costa 
     given-names: Luiz 
-
 keywords:
-  - Gestão
-  - Posto de Gasolina
-  - Controle Financeiro
-  - Controle de Estoque
-  - Gestão de Vendas
-
+  - "Gestão"
+  - "Posto de Gasolina"
+  - "Controle Financeiro"
+  - "Controle de Estoque"
+  - "Gestão de Vendas"
 repository-code: "https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2023-2-ti3-6654100-posto-ipiranga"
 license: CC-BY-4.0
 version: 1.0.0
